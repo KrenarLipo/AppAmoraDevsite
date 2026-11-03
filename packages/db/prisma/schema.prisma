@@ -1,0 +1,131 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "esm"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ContactInterest {
+  AI_AGENTS
+  VIBE_CODING
+  AI_SEO
+  WEBSITE_BUILDER
+  OTHER
+}
+
+enum ContactStatus {
+  NEW
+  READ
+  ARCHIVED
+}
+
+/// Messages sent from the contact form on appamora.com.
+model ContactMessage {
+  id        String          @id @default(cuid())
+  name      String
+  email     String
+  interest  ContactInterest
+  message   String
+  locale    String
+  status    ContactStatus   @default(NEW)
+  createdAt DateTime        @default(now())
+
+  @@index([status, createdAt])
+}
+
+// ─── Authentication (Better Auth) ───────────────────────────────────────────
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String    @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  role          Role      @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+/// A login method for a user: "credential" (email + password) or an OAuth provider like "google".
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+}
+
+/// Login attempt counters, stored in the database so limits hold across serverless instances.
+model RateLimit {
+  id          String @id
+  key         String @unique
+  count       Int
+  lastRequest BigInt
+}
+
+// ─── Site content ───────────────────────────────────────────────────────────
+
+/// Uploaded images, stored in the database so `pnpm db:export` carries them along.
+/// Served at /media/<id>. Always re-encoded to WebP with metadata (EXIF, GPS) stripped.
+model Media {
+  id        String   @id @default(cuid())
+  mimeType  String
+  width     Int
+  height    Int
+  size      Int
+  data      Bytes
+  createdAt DateTime @default(now())
+}
+
+/// Editable site settings as JSON documents, e.g. "images" and "menus".
+model SiteSetting {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+}

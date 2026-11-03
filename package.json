@@ -1,0 +1,25 @@
+{
+  "name": "appamora",
+  "private": true,
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "db:generate": "pnpm --filter @appamora/db generate",
+    "db:migrate": "pnpm --filter @appamora/db migrate",
+    "db:studio": "pnpm --filter @appamora/db studio",
+    "db:up": "docker compose up -d --wait",
+    "db:down": "docker compose stop",
+    "db:deploy": "pnpm --filter @appamora/db run migrate:deploy",
+    "db:export": "bash scripts/db-export.sh",
+    "admin:create": "pnpm --filter @appamora/web run admin:create"
+  },
+  "devDependencies": {
+    "turbo": "^2.11.10"
+  },
+  "packageManager": "pnpm@12.16.1",
+  "engines": {
+    "node": ">=22"
+  }
+}

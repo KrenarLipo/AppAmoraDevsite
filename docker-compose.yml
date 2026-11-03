@@ -1,0 +1,22 @@
+# Local development database. Data persists in the "appamora-pg" volume.
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: appamora-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: appamora
+      POSTGRES_PASSWORD: appamora
+      POSTGRES_DB: appamora
+    ports:
+      - "5434:5432"
+    volumes:
+      - appamora-pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U appamora -d appamora"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  appamora-pg:

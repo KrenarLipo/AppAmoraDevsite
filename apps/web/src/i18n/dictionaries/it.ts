@@ -1,0 +1,308 @@
+import type { Dictionary } from "../types";
+
+const it: Dictionary = {
+  meta: {
+    title: "AppAmora — Agenti AI, Vibe Coding e AI SEO per piccole imprese",
+    description:
+      "AppAmora crea agenti AI, web app su misura in tempi rapidi e SEO pronta per l'AI — più una piattaforma semplice per creare il sito della tua attività, senza codice.",
+  },
+  nav: {
+    services: "Servizi",
+    templates: "Template",
+    pricing: "Prezzi",
+    blog: "Blog",
+    about: "Chi siamo",
+    contact: "Contatti",
+    login: "Accedi",
+    startTrial: "Prova gratis",
+    language: "Lingua",
+    openMenu: "Apri menu",
+    closeMenu: "Chiudi menu",
+    home: "Home di AppAmora",
+    skipToContent: "Vai al contenuto",
+  },
+  hero: {
+    titleStart: "La tua attività online. Costruita con intelligenza,",
+    titleAccent: "gestita da te.",
+    subtitle:
+      "AppAmora crea agenti AI, web app su misura in tempi rapidi e SEO pronta per l'AI — più una piattaforma semplice che ogni attività può modificare senza scrivere una riga di codice.",
+    primaryCta: "Provalo gratis per 2 settimane",
+    secondaryCta: "Scopri i servizi",
+    perks: ["2 settimane gratis", "English · Italiano · Shqip", "Online in pochi minuti"],
+    mock: {
+      dashboard: "Dashboard",
+      slideshow: "Slideshow",
+      pages: "Pagine",
+      languages: "Lingue",
+      subscribers: "Iscritti",
+      theme: "Tema",
+      slideTitle: "Costruiamo brand online",
+      slideHint: "Slide 1 di 3 · trascina per riordinare",
+    },
+  },
+  services: {
+    eyebrow: "Cosa facciamo",
+    title: "Tre modi per mettere l'AI al lavoro per la tua attività.",
+    bookCall: "Prenota una call gratuita",
+    learnMore: "Scopri di più",
+    whatYouGet: "Cosa ottieni",
+    ctaTitle: "Parliamo del tuo progetto",
+    ctaBody: "Raccontaci di cosa hai bisogno: ti risponderemo con un piano e un preventivo.",
+    ctaButton: "Contattaci",
+    items: {
+      "ai-agents": {
+        name: "Agenti AI",
+        summary:
+          "Assistenti su misura che rispondono ai tuoi clienti, raccolgono prenotazioni e gestiscono il lavoro ripetitivo — giorno e notte.",
+        bullets: ["Assistenti per sito e chat", "Raccolta e qualificazione dei contatti", "Automazione dei processi"],
+        description:
+          "Un agente AI è un assistente digitale addestrato sulla tua attività: i tuoi servizi, i prezzi, gli orari e il modo in cui parli con i clienti. Risponde alle domande sul tuo sito o sui social, raccoglie i contatti delle persone interessate e ti passa la conversazione quando serve una persona. Dietro le quinte, gli agenti possono anche occuparsi di compiti ripetitivi come smistare le email, aggiornare fogli di calcolo o inviare follow-up.",
+        deliverables: [
+          "Un assistente chat sul tuo sito, addestrato sui tuoi contenuti",
+          "Raccolta contatti che ti invia direttamente i clienti qualificati",
+          "Automazione di prenotazioni e domande frequenti",
+          "Collegamento agli strumenti che usi già (email, fogli, CRM)",
+          "Monitoraggio e miglioramenti dopo il lancio",
+        ],
+      },
+      "vibe-coding": {
+        name: "Vibe Coding",
+        summary:
+          "Web app, strumenti e prototipi sviluppati con l'aiuto dell'AI — consegnati in giorni, non in mesi.",
+        bullets: ["MVP e strumenti interni", "Landing page e web app", "Integrazioni e API"],
+        description:
+          "Vibe coding significa costruire software insieme all'AI: descriviamo cosa deve fare il prodotto, l'AI scrive gran parte del codice e sviluppatori esperti lo revisionano, lo rifiniscono e lo pubblicano. Il risultato è software vero e manutenibile — consegnato molto più in fretta e a una frazione del costo abituale. Ideale per testare un'idea, sostituire un foglio di calcolo disordinato o lanciare in tempo la pagina di una campagna.",
+        deliverables: [
+          "Un prototipo cliccabile, in tempi rapidi",
+          "Web app e strumenti interni pronti per la produzione",
+          "Landing page per una campagna o un lancio",
+          "Integrazioni tra i servizi che usi",
+          "Codice pulito che resta tuo",
+        ],
+      },
+      "ai-seo": {
+        name: "AI SEO",
+        summary: "Fatti trovare su Google e nelle risposte delle AI come ChatGPT, Gemini e Perplexity.",
+        bullets: ["Audit SEO tecnico", "Contenuti strutturati per la ricerca AI", "SEO locale e multilingue"],
+        description:
+          "Sempre più persone fanno domande agli assistenti AI invece di scorrere i risultati di ricerca. L'AI SEO fa sì che la tua attività compaia in entrambi i posti: sistemiamo le basi tecniche, strutturiamo i contenuti in modo che motori di ricerca e modelli AI li capiscano e costruiamo la tua visibilità in ogni lingua in cui vendi.",
+        deliverables: [
+          "Un audit tecnico con una lista di priorità chiara",
+          "Dati strutturati per far capire la tua attività ai motori di ricerca",
+          "Contenuti scritti per essere citati dagli assistenti AI",
+          "SEO locale e ottimizzazione del Profilo dell'attività su Google",
+          "SEO multilingue per EN, IT, SQ, DE e FR",
+        ],
+      },
+    },
+  },
+  builder: {
+    eyebrow: "Il builder AppAmora",
+    title: "Scegli un template. Rendilo tuo. Senza codice.",
+    subtitle:
+      "Scegli uno dei sei design pronti, modifica slideshow e pagine, cambia lingua e raccogli iscritti — tutto da un'unica dashboard semplice.",
+    cta: "Vedi tutti i template",
+    defaultBadge: "Predefinito",
+    preview: "Anteprima",
+    features: [
+      { title: "Editor slideshow", body: "Carica, riordina e aggiungi didascalie alle slide." },
+      { title: "5 lingue", body: "EN, IT, SQ, DE, FR — due con Starter, tutte e cinque con Pro." },
+      { title: "Modulo iscrizioni", body: "Ogni iscrizione arriva nella lista della tua dashboard." },
+      { title: "Colori e font", body: "Cambia lo stile di tutto il sito dalle Impostazioni." },
+      { title: "Il tuo indirizzo", body: "Un sottodominio gratuito, oppure ti consegniamo il sito per il tuo dominio." },
+    ],
+  },
+  templates: {
+    "web-agency": { name: "Web Agency", description: "Studi, freelance, creativi" },
+    restaurant: { name: "Ristorante e Bar", description: "Menu, prenotazioni, orari" },
+    beauty: { name: "Bellezza e Benessere", description: "Saloni, spa, centri estetici" },
+    professional: { name: "Servizi Professionali", description: "Avvocati, commercialisti, consulenti" },
+    shop: { name: "Negozio Locale", description: "Vendita, prodotti, showroom" },
+    fitness: { name: "Fitness e Sport", description: "Palestre, personal trainer, società sportive" },
+  },
+  templatesPage: {
+    title: "Template per ogni tipo di attività",
+    subtitle:
+      "Ogni template include slideshow, pagine multilingue, modulo di iscrizione e pieno controllo su colori e font. Scegline uno e rendilo tuo.",
+    comingSoon: "Le anteprime live arriveranno presto. Vuoi l'accesso anticipato? Iscriviti alla lista d'attesa.",
+    waitlist: "Iscriviti alla lista d'attesa",
+  },
+  steps: {
+    eyebrow: "Come funziona",
+    title: "Online in tre passi.",
+    stepLabel: "Passo",
+    items: [
+      {
+        title: "Registrati e scegli un template",
+        body: "Crea il tuo account con email o Google e scegli il design più adatto alla tua attività.",
+      },
+      {
+        title: "Modifica dalla dashboard",
+        body: "Cambia testi, slide, lingue, colori e font. Ogni modifica si vede subito.",
+      },
+      {
+        title: "Vai online",
+        body: "Pubblica su tuonome.appamora.com, oppure ricevi il sito finito per il tuo dominio.",
+      },
+    ],
+  },
+  pricing: {
+    eyebrow: "Prezzi",
+    title: "Provalo gratis per 2 settimane. Passa al livello successivo quando cresci.",
+    subtitle: "Nessuna carta per iniziare. Inserisci i dati di pagamento solo alla fine della prova.",
+    perMonth: "/mese",
+    mostPopular: "Il più scelto",
+    plans: {
+      starter: {
+        name: "Starter",
+        tagline: "2 settimane gratis, poi",
+        cta: "Inizia la prova gratuita",
+        features: [
+          "Prova gratuita di 14 giorni",
+          "Tutti i 6 template",
+          "tuonome.appamora.com",
+          "2 lingue",
+          "Modulo iscrizioni",
+          "Colori e font",
+        ],
+      },
+      pro: {
+        name: "Pro",
+        tagline: "Per attività in crescita",
+        cta: "Passa a Pro",
+        features: [
+          "Tutto ciò che c'è in Starter",
+          "Tutte e 5 le lingue",
+          "Il tuo dominio",
+          "Feed Instagram e TikTok (presto)",
+          "Nessun badge AppAmora",
+        ],
+      },
+      custom: {
+        name: "Chiavi in mano",
+        tagline: "Agenti AI, app e SEO",
+        price: "Su misura",
+        priceNote: "Prezzo su richiesta",
+        cta: "Contattaci",
+        features: ["Agente AI su misura", "Web app in vibe coding", "Audit e piano AI SEO", "Supporto dedicato"],
+      },
+    },
+    faqTitle: "Domande",
+    faq: [
+      {
+        q: "Serve una carta per iniziare la prova?",
+        a: "No. Puoi usare AppAmora per 14 giorni senza dati di pagamento. Ti chiediamo una carta solo alla fine della prova, se decidi di continuare.",
+      },
+      {
+        q: "Cosa succede dopo le 2 settimane?",
+        a: "Il tuo sito resta salvato. Aggiungi un metodo di pagamento per mantenerlo online con Starter (20 €/mese) oppure passa a Pro (85 €/mese).",
+      },
+      {
+        q: "Posso usare il mio dominio?",
+        a: "Sì, con Pro. I siti Starter sono online su un indirizzo gratuito tuonome.appamora.com.",
+      },
+      {
+        q: "Posso disdire quando voglio?",
+        a: "Sì. I piani sono mensili e puoi disdire in qualsiasi momento.",
+      },
+    ],
+  },
+  blog: {
+    eyebrow: "Blog",
+    title: "Appunti sull'AI per le imprese.",
+    all: "Tutti gli articoli",
+    readingTime: "{minutes} min di lettura",
+    back: "Torna al blog",
+    empty: "Ancora nessun articolo — torna a trovarci presto.",
+    englishOnly: "Questo articolo per ora è disponibile solo in inglese.",
+  },
+  about: {
+    eyebrow: "Chi è AppAmora",
+    title: "Tecnologia che le piccole imprese possono davvero usare.",
+    body: "Crediamo che ogni attività meriti una presenza online moderna e strumenti AI — senza i costi di un'agenzia né mesi per imparare. AppAmora unisce agenti AI, sviluppo software rapido e visibilità nei motori di ricerca, e li rende accessibili a tutti.",
+    story: "[LA TUA STORIA — chi sei, dove ti trovi e perché hai fondato AppAmora.]",
+    valuesTitle: "In cosa crediamo",
+    values: [
+      { title: "Prima di tutto semplice", body: "Se serve un manuale, non abbiamo finito di progettarlo." },
+      { title: "Prezzi onesti", body: "Strumenti professionali a un prezzo a cui una piccola impresa può dire di sì." },
+      { title: "Multilingue di natura", body: "Pensato per attività che parlano ai clienti in più di una lingua." },
+    ],
+    follow: "Seguici",
+  },
+  contact: {
+    eyebrow: "Contatti",
+    title: "Raccontaci il tuo progetto",
+    subtitle: "Di solito rispondiamo entro un giorno lavorativo.",
+    emailUs: "Oppure scrivici a",
+    form: {
+      name: "Nome",
+      email: "Email",
+      interest: "Mi interessa",
+      message: "Messaggio",
+      submit: "Invia messaggio",
+      sending: "Invio in corso…",
+      success: "Grazie! Il tuo messaggio è stato inviato. Ti risponderemo presto.",
+      errors: {
+        name: "Inserisci il tuo nome.",
+        email: "Inserisci un indirizzo email valido.",
+        message: "Scrivi un messaggio di almeno 10 caratteri.",
+        generic: "Qualcosa è andato storto. Riprova o scrivici direttamente via email.",
+      },
+    },
+    interests: {
+      AI_AGENTS: "Agenti AI",
+      VIBE_CODING: "Vibe Coding",
+      AI_SEO: "AI SEO",
+      WEBSITE_BUILDER: "Builder di siti (lista d'attesa)",
+      OTHER: "Altro",
+    },
+  },
+  ctaBand: {
+    title: "Pronto a far crescere la tua attività con l'AI?",
+    body: "Inizia con un sito gratuito o parlaci di un progetto su misura.",
+    primary: "Prova gratis",
+    secondary: "Parliamone",
+  },
+  footer: {
+    tagline: "Agenti AI, vibe coding e AI SEO per piccole imprese.",
+    services: "Servizi",
+    platform: "Piattaforma",
+    company: "Azienda",
+    rights: "Tutti i diritti riservati.",
+    instagram: "AppAmora su Instagram",
+    tiktok: "AppAmora su TikTok",
+  },
+  auth: {
+    metaTitle: "Accedi",
+    title: "Bentornato",
+    subtitle: "Accedi al tuo account AppAmora.",
+    panelTitle: "La tua attività online. Costruita con intelligenza, gestita da te.",
+    panelBody: "Gestisci sito, messaggi e contenuti da un'unica dashboard semplice.",
+    email: "Email",
+    password: "Password",
+    signIn: "Accedi",
+    signingIn: "Accesso in corso…",
+    google: "Continua con Google",
+    orEmail: "oppure con email",
+    noAccount: "Non hai ancora un account?",
+    startTrial: "Inizia la prova gratuita",
+    recaptcha: "Protetto da reCAPTCHA. Si applicano le {privacy} e i {terms} di Google.",
+    privacy: "Norme sulla privacy",
+    terms: "Termini di servizio",
+    errors: {
+      invalid: "Email o password errate.",
+      tooMany: "Troppi tentativi. Attendi un minuto e riprova.",
+      network: "Impossibile raggiungere il server. Controlla la connessione e riprova.",
+      forbidden: "Questo account non ha accesso alla dashboard.",
+      googleNoAccount: "Non esiste un account per questo indirizzo Google.",
+      generic: "Accesso non riuscito. Riprova.",
+    },
+  },
+  notFound: {
+    title: "Pagina non trovata",
+    body: "La pagina che cerchi non esiste o è stata spostata.",
+    home: "Torna alla home",
+  },
+};
+
+export default it;

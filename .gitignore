@@ -1,0 +1,15 @@
+node_modules
+.turbo
+.next
+out
+dist
+build
+*.tsbuildinfo
+next-env.d.ts
+.env
+.env*.local
+.vercel
+.DS_Store
+coverage
+packages/db/src/generated
+backups
