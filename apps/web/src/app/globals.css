@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  /* AppAmora brand palette — see the design proposal. */
+  --color-ink: #0e1116;
+  --color-paper: #f6f5f1;
+  --color-cream: #fbfaf7;
+  --color-sand: #eeece5;
+  --color-amora: #d7381f;
+  --color-amora-dark: #a12a15;
+  --color-amora-bright: #ff6a4d;
+  --color-muted: #4a5160;
+  --color-mist: #a3a9b5;
+  --color-line: #e2e0d8;
+  --color-line-strong: #d4d1c7;
+  --color-panel: #171b22;
+  --color-panel-line: #262b35;
+
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-amora;
+  }
+}
+
+@utility container-page {
+  @apply mx-auto w-full max-w-[1200px] px-6;
+}
+
+@utility eyebrow {
+  @apply font-mono text-[13px] tracking-[0.08em] uppercase;
+}
+
+/* Long-form blog content rendered from markdown. */
+@utility prose-amora {
+  @apply text-[17px] leading-[1.75] text-muted;
+
+  & h2 {
+    @apply mt-12 mb-4 font-display text-[28px] leading-tight font-bold tracking-tight text-ink;
+  }
+  & h3 {
+    @apply mt-8 mb-3 font-display text-[22px] font-semibold text-ink;
+  }
+  & p {
+    @apply mb-5;
+  }
+  & ul,
+  & ol {
+    @apply mb-5 flex flex-col gap-2 pl-6;
+  }
+  & ul {
+    @apply list-disc;
+  }
+  & ol {
+    @apply list-decimal;
+  }
+  & a {
+    @apply font-medium text-ink underline decoration-amora decoration-2 underline-offset-4 hover:text-amora;
+  }
+  & strong {
+    @apply font-semibold text-ink;
+  }
+  & code {
+    @apply rounded bg-sand px-1.5 py-0.5 font-mono text-[0.9em] text-ink;
+  }
+  & blockquote {
+    @apply my-6 border-l-2 border-amora pl-5 text-ink italic;
+  }
+}

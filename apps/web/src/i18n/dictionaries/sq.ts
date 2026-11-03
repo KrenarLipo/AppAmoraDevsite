@@ -1,0 +1,308 @@
+import type { Dictionary } from "../types";
+
+const sq: Dictionary = {
+  meta: {
+    title: "AppAmora — Agjentë AI, Vibe Coding dhe AI SEO për biznese të vogla",
+    description:
+      "AppAmora ndërton agjentë AI, aplikacione web të shpejta sipas porosisë dhe SEO gati për AI — si dhe një platformë të thjeshtë faqesh që çdo biznes e ndryshon pa kod.",
+  },
+  nav: {
+    services: "Shërbimet",
+    templates: "Shabllonet",
+    pricing: "Çmimet",
+    blog: "Blog",
+    about: "Rreth nesh",
+    contact: "Kontakt",
+    login: "Hyr",
+    startTrial: "Provo falas",
+    language: "Gjuha",
+    openMenu: "Hap menunë",
+    closeMenu: "Mbyll menunë",
+    home: "Kreu i AppAmora",
+    skipToContent: "Kalo te përmbajtja",
+  },
+  hero: {
+    titleStart: "Biznesi yt online. I ndërtuar me zgjuarsi,",
+    titleAccent: "i menaxhuar nga ti.",
+    subtitle:
+      "AppAmora ndërton agjentë AI, aplikacione web të shpejta sipas porosisë dhe SEO gati për AI — si dhe një platformë të thjeshtë faqesh që çdo biznes mund ta ndryshojë pa shkruar asnjë rresht kodi.",
+    primaryCta: "Provoje falas për 2 javë",
+    secondaryCta: "Shiko shërbimet",
+    perks: ["2 javë falas", "English · Italiano · Shqip", "Online për pak minuta"],
+    mock: {
+      dashboard: "Paneli",
+      slideshow: "Slideshow",
+      pages: "Faqet",
+      languages: "Gjuhët",
+      subscribers: "Abonentët",
+      theme: "Tema",
+      slideTitle: "Ndërtojmë marka online",
+      slideHint: "Slajdi 1 nga 3 · tërhiq për ta rirenditur",
+    },
+  },
+  services: {
+    eyebrow: "Çfarë bëjmë",
+    title: "Tre mënyra si e vëmë AI-në në punë për biznesin tënd.",
+    bookCall: "Rezervo një telefonatë falas",
+    learnMore: "Mëso më shumë",
+    whatYouGet: "Çfarë përfiton",
+    ctaTitle: "Le të flasim për projektin tënd",
+    ctaBody: "Na trego çfarë të duhet dhe do të të kthejmë përgjigje me një plan dhe një ofertë.",
+    ctaButton: "Na kontakto",
+    items: {
+      "ai-agents": {
+        name: "Agjentë AI",
+        summary:
+          "Asistentë sipas porosisë që u përgjigjen klientëve, marrin rezervime dhe kryejnë punët e përsëritura — ditë e natë.",
+        bullets: ["Asistentë për faqen dhe chat-in", "Mbledhje dhe kualifikim kontaktesh", "Automatizim i proceseve"],
+        description:
+          "Një agjent AI është një asistent dixhital i trajnuar për biznesin tënd: shërbimet, çmimet, oraret dhe mënyrën si flet me klientët. U përgjigjet pyetjeve në faqen tënde ose në rrjetet sociale, mbledh kontaktet e personave të interesuar dhe ta kalon bisedën kur nevojitet një njeri. Në prapaskenë, agjentët mund të kujdesen edhe për detyra të përsëritura si renditja e email-eve, përditësimi i tabelave ose dërgimi i mesazheve vijuese.",
+        deliverables: [
+          "Një asistent chat në faqen tënde, i trajnuar me përmbajtjen tënde",
+          "Mbledhje kontaktesh që t'i dërgon klientët e kualifikuar direkt ty",
+          "Automatizim i rezervimeve dhe pyetjeve të shpeshta",
+          "Lidhje me mjetet që përdor tashmë (email, tabela, CRM)",
+          "Monitorim dhe përmirësime pas lançimit",
+        ],
+      },
+      "vibe-coding": {
+        name: "Vibe Coding",
+        summary:
+          "Aplikacione web, mjete dhe prototipe të ndërtuara me ndihmën e AI — gati për ditë, jo për muaj.",
+        bullets: ["MVP dhe mjete të brendshme", "Faqe prezantuese dhe aplikacione web", "Integrime dhe API"],
+        description:
+          "Vibe coding do të thotë të ndërtosh softuer së bashku me AI-në: ne përshkruajmë çfarë duhet të bëjë produkti, AI shkruan një pjesë të madhe të kodit dhe zhvillues me përvojë e rishikojnë, e përsosin dhe e publikojnë. Rezultati është softuer i vërtetë dhe i mirëmbajtshëm — i dorëzuar shumë më shpejt dhe me një pjesë të vogël të kostos së zakonshme. Ideal për të testuar një ide, për të zëvendësuar një tabelë të çrregullt ose për të nisur në kohë faqen e një fushate.",
+        deliverables: [
+          "Një prototip që mund ta provosh, shpejt",
+          "Aplikacione web dhe mjete të brendshme gati për përdorim",
+          "Faqe prezantuese për një fushatë ose lançim",
+          "Integrime mes shërbimeve që përdor",
+          "Kod i pastër që të përket ty",
+        ],
+      },
+      "ai-seo": {
+        name: "AI SEO",
+        summary: "Bëhu i gjetshëm në Google dhe në përgjigjet e AI si ChatGPT, Gemini dhe Perplexity.",
+        bullets: ["Auditim teknik SEO", "Përmbajtje e strukturuar për kërkimin me AI", "SEO lokale dhe shumëgjuhëshe"],
+        description:
+          "Gjithnjë e më shumë njerëz pyesin asistentët AI në vend që të shfletojnë rezultatet e kërkimit. AI SEO siguron që biznesi yt të shfaqet në të dyja vendet: rregullojmë bazat teknike, e strukturojmë përmbajtjen që motorët e kërkimit dhe modelet AI ta kuptojnë, dhe ndërtojmë dukshmërinë tënde në çdo gjuhë ku shet.",
+        deliverables: [
+          "Një auditim teknik me një listë të qartë prioritetesh",
+          "Të dhëna të strukturuara që motorët e kërkimit ta kuptojnë biznesin tënd",
+          "Përmbajtje e shkruar për t'u cituar nga asistentët AI",
+          "SEO lokale dhe optimizim i Profilit të Biznesit në Google",
+          "SEO shumëgjuhëshe për EN, IT, SQ, DE dhe FR",
+        ],
+      },
+    },
+  },
+  builder: {
+    eyebrow: "Ndërtuesi AppAmora",
+    title: "Zgjidh një shabllon. Bëje tëndin. Pa kod.",
+    subtitle:
+      "Zgjidh një nga gjashtë dizajnet e gatshme, ndrysho slideshow-n dhe faqet, ndërro gjuhët dhe mblidh abonentë — gjithçka nga një panel i thjeshtë.",
+    cta: "Shiko të gjitha shabllonet",
+    defaultBadge: "Parazgjedhur",
+    preview: "Shiko",
+    features: [
+      { title: "Redaktori i slideshow-t", body: "Ngarko, rirendit dhe shto tekst te slajdet kryesore." },
+      { title: "5 gjuhë", body: "EN, IT, SQ, DE, FR — dy me Starter, të pesat me Pro." },
+      { title: "Formulari i abonimit", body: "Çdo regjistrim shfaqet në listën e panelit tënd." },
+      { title: "Ngjyra dhe fonte", body: "Ndrysho stilin e gjithë faqes nga Cilësimet." },
+      { title: "Adresa jote", body: "Një nëndomen falas, ose ta dorëzojmë faqen për domenin tënd." },
+    ],
+  },
+  templates: {
+    "web-agency": { name: "Agjenci Web", description: "Studio, freelancerë, krijues" },
+    restaurant: { name: "Restorant dhe Kafe", description: "Menu, rezervime, orare" },
+    beauty: { name: "Bukuri dhe Mirëqenie", description: "Sallone, spa, studio" },
+    professional: { name: "Shërbime Profesionale", description: "Avokatë, kontabilistë, konsulentë" },
+    shop: { name: "Dyqan Lokal", description: "Shitje, produkte, showroom" },
+    fitness: { name: "Fitness dhe Sport", description: "Palestra, trajnerë, klube" },
+  },
+  templatesPage: {
+    title: "Shabllone për çdo lloj biznesi",
+    subtitle:
+      "Çdo shabllon vjen me slideshow, faqe shumëgjuhëshe, formular abonimi dhe kontroll të plotë mbi ngjyrat dhe fontet. Zgjidh një dhe bëje tëndin.",
+    comingSoon: "Pamjet paraprake live vijnë së shpejti. Do qasje të hershme? Regjistrohu në listën e pritjes.",
+    waitlist: "Regjistrohu në listën e pritjes",
+  },
+  steps: {
+    eyebrow: "Si funksionon",
+    title: "Online në tre hapa.",
+    stepLabel: "Hapi",
+    items: [
+      {
+        title: "Regjistrohu dhe zgjidh një shabllon",
+        body: "Krijo llogarinë me email ose Google dhe zgjidh dizajnin që i përshtatet biznesit tënd.",
+      },
+      {
+        title: "Ndrysho nga paneli",
+        body: "Ndrysho tekste, slajde, gjuhë, ngjyra dhe fonte. Çdo ndryshim duket menjëherë.",
+      },
+      {
+        title: "Dil online",
+        body: "Publiko në emrijot.appamora.com, ose merr faqen e përfunduar për domenin tënd.",
+      },
+    ],
+  },
+  pricing: {
+    eyebrow: "Çmimet",
+    title: "Provoje falas për 2 javë. Kalo më lart kur të rritesh.",
+    subtitle: "Nuk të duhet kartë për të filluar. Të dhënat e pagesës i shton vetëm kur mbaron prova.",
+    perMonth: "/muaj",
+    mostPopular: "Më i zgjedhuri",
+    plans: {
+      starter: {
+        name: "Starter",
+        tagline: "2 javë falas, pastaj",
+        cta: "Fillo provën falas",
+        features: [
+          "Provë falas 14-ditore",
+          "Të 6 shabllonet",
+          "emrijot.appamora.com",
+          "2 gjuhë",
+          "Formular abonimi",
+          "Ngjyra dhe fonte",
+        ],
+      },
+      pro: {
+        name: "Pro",
+        tagline: "Për biznese në rritje",
+        cta: "Kalo në Pro",
+        features: [
+          "Gjithçka nga Starter",
+          "Të 5 gjuhët",
+          "Domeni yt",
+          "Feed Instagram dhe TikTok (së shpejti)",
+          "Pa shenjën AppAmora",
+        ],
+      },
+      custom: {
+        name: "Gati për ty",
+        tagline: "Agjentë AI, aplikacione dhe SEO",
+        price: "Me porosi",
+        priceNote: "Çmimi sipas kërkesës",
+        cta: "Na kontakto",
+        features: ["Agjent AI sipas porosisë", "Aplikacion web me vibe coding", "Auditim dhe plan AI SEO", "Mbështetje e dedikuar"],
+      },
+    },
+    faqTitle: "Pyetje",
+    faq: [
+      {
+        q: "A më duhet kartë për të nisur provën?",
+        a: "Jo. Mund ta përdorësh AppAmora për 14 ditë pa të dhëna pagese. Të kërkojmë kartë vetëm kur mbaron prova dhe vendos të vazhdosh.",
+      },
+      {
+        q: "Çfarë ndodh pas 2 javëve?",
+        a: "Faqja jote mbetet e ruajtur. Shto një mënyrë pagese për ta mbajtur online me Starter (20 €/muaj) ose kalo në Pro (85 €/muaj).",
+      },
+      {
+        q: "A mund të përdor domenin tim?",
+        a: "Po, me Pro. Faqet Starter janë online në një adresë falas emrijot.appamora.com.",
+      },
+      {
+        q: "A mund ta anuloj kur të dua?",
+        a: "Po. Planet janë mujore dhe mund t'i anulosh në çdo kohë.",
+      },
+    ],
+  },
+  blog: {
+    eyebrow: "Blog",
+    title: "Shënime për AI-në në biznes.",
+    all: "Të gjithë artikujt",
+    readingTime: "{minutes} min lexim",
+    back: "Kthehu te blogu",
+    empty: "Ende nuk ka artikuj — kthehu së shpejti.",
+    englishOnly: "Ky artikull për momentin është i disponueshëm vetëm në anglisht.",
+  },
+  about: {
+    eyebrow: "Rreth AppAmora",
+    title: "Teknologji që bizneset e vogla mund ta përdorin vërtet.",
+    body: "Besojmë se çdo biznes meriton një prezencë moderne online dhe mjete AI — pa çmimin e një agjencie dhe pa muaj mësimi. AppAmora bashkon agjentët AI, zhvillimin e shpejtë të softuerit dhe dukshmërinë në kërkim, dhe i bën të përdorshme për këdo.",
+    story: "[HISTORIA JOTE — kush je, ku ndodhesh dhe pse e nise AppAmora.]",
+    valuesTitle: "Në çfarë besojmë",
+    values: [
+      { title: "Thjeshtësia në radhë të parë", body: "Nëse duhet një manual, nuk e kemi përfunduar dizajnin." },
+      { title: "Çmime të drejta", body: "Mjete profesionale me një çmim që një biznes i vogël mund ta pranojë." },
+      { title: "Shumëgjuhësh që në fillim", body: "I ndërtuar për biznese që u flasin klientëve në më shumë se një gjuhë." },
+    ],
+    follow: "Na ndiq",
+  },
+  contact: {
+    eyebrow: "Kontakt",
+    title: "Na trego për projektin tënd",
+    subtitle: "Zakonisht përgjigjemi brenda një dite pune.",
+    emailUs: "Ose na shkruaj në",
+    form: {
+      name: "Emri",
+      email: "Email",
+      interest: "Më intereson",
+      message: "Mesazhi",
+      submit: "Dërgo mesazhin",
+      sending: "Po dërgohet…",
+      success: "Faleminderit! Mesazhi yt u dërgua. Do të të kontaktojmë së shpejti.",
+      errors: {
+        name: "Shkruaj emrin tënd.",
+        email: "Shkruaj një adresë email të vlefshme.",
+        message: "Shkruaj një mesazh me të paktën 10 karaktere.",
+        generic: "Diçka shkoi keq. Provo përsëri ose na shkruaj direkt me email.",
+      },
+    },
+    interests: {
+      AI_AGENTS: "Agjentë AI",
+      VIBE_CODING: "Vibe Coding",
+      AI_SEO: "AI SEO",
+      WEBSITE_BUILDER: "Ndërtuesi i faqeve (lista e pritjes)",
+      OTHER: "Diçka tjetër",
+    },
+  },
+  ctaBand: {
+    title: "Gati ta rritësh biznesin me AI?",
+    body: "Fillo me një faqe falas ose na trego për një projekt sipas porosisë.",
+    primary: "Provo falas",
+    secondary: "Le të flasim",
+  },
+  footer: {
+    tagline: "Agjentë AI, vibe coding dhe AI SEO për biznese të vogla.",
+    services: "Shërbimet",
+    platform: "Platforma",
+    company: "Kompania",
+    rights: "Të gjitha të drejtat të rezervuara.",
+    instagram: "AppAmora në Instagram",
+    tiktok: "AppAmora në TikTok",
+  },
+  auth: {
+    metaTitle: "Hyr",
+    title: "Mirë se u ktheve",
+    subtitle: "Hyr në llogarinë tënde AppAmora.",
+    panelTitle: "Biznesi yt online. I ndërtuar me zgjuarsi, i menaxhuar nga ti.",
+    panelBody: "Menaxho faqen, mesazhet dhe përmbajtjen nga një panel i thjeshtë.",
+    email: "Email",
+    password: "Fjalëkalimi",
+    signIn: "Hyr",
+    signingIn: "Duke hyrë…",
+    google: "Vazhdo me Google",
+    orEmail: "ose me email",
+    noAccount: "Nuk ke ende llogari?",
+    startTrial: "Fillo provën falas",
+    recaptcha: "I mbrojtur nga reCAPTCHA. Zbatohen {privacy} dhe {terms} e Google.",
+    privacy: "Politika e Privatësisë",
+    terms: "Kushtet e Shërbimit",
+    errors: {
+      invalid: "Email ose fjalëkalim i gabuar.",
+      tooMany: "Shumë përpjekje. Prit një minutë dhe provo përsëri.",
+      network: "Serveri nuk u arrit. Kontrollo lidhjen dhe provo përsëri.",
+      forbidden: "Kjo llogari nuk ka qasje në panel.",
+      googleNoAccount: "Nuk ka llogari për këtë adresë Google.",
+      generic: "Hyrja dështoi. Provo përsëri.",
+    },
+  },
+  notFound: {
+    title: "Faqja nuk u gjet",
+    body: "Faqja që kërkon nuk ekziston ose është zhvendosur.",
+    home: "Kthehu në kreu",
+  },
+};
+
+export default sq;
