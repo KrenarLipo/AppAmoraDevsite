@@ -7,10 +7,24 @@ import { captcha } from "better-auth/plugins/captcha";
 /** Google login is offered only once its keys are set in the environment. */
 export const googleEnabled = Boolean(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET);
 
+/**
+ * The site's own URL for login redirects and cookies.
+ * Vercel production: its production domain (the *.vercel.app address until appamora.com is connected).
+ * Locally and on preview deploys: undefined, so it's taken from each request and any port works.
+ */
+function authBaseURL(): string | undefined {
+  if (process.env.BETTER_AUTH_URL) return process.env.BETTER_AUTH_URL;
+  if (process.env.VERCEL_ENV === "production" && process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+  return undefined;
+}
+
 function createAuth() {
   const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
 
   return betterAuth({
+    baseURL: authBaseURL(),
     database: prismaAdapter(getDb(), { provider: "postgresql" }),
     emailAndPassword: {
       enabled: true,

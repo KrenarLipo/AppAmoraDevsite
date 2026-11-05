@@ -17,7 +17,10 @@ async function loginPath() {
  * Every admin page and server action calls this: the proxy's cookie check is only a fast path.
  */
 export const requireAdmin = cache(async (): Promise<AdminUser> => {
-  const session = await getAuth().api.getSession({ headers: await headers() });
+  // Read the request first: during the build this waits for a real request,
+  // so the auth setup (and its database connection) is never touched.
+  const requestHeaders = await headers();
+  const session = await getAuth().api.getSession({ headers: requestHeaders });
   if (!session) redirect(await loginPath());
   if (session.user.role !== "ADMIN") redirect(`${await loginPath()}?error=forbidden`);
   return { id: session.user.id, name: session.user.name, email: session.user.email };
