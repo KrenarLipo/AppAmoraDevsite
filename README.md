@@ -96,9 +96,18 @@ A post missing in Italian or Albanian falls back to the English version, with a 
 
 ## Deploying
 
-1. **Database** — create a Postgres database on [Neon](https://neon.tech) or [Supabase](https://supabase.com) and run `DATABASE_URL="<its url>" pnpm db:deploy` to create the tables.
-2. **Vercel** — import the GitHub repo, set **Root Directory** to `apps/web`, and add the `DATABASE_URL` and `NEXT_PUBLIC_SITE_URL` environment variables.
-3. **Domain (GoDaddy)** — in Vercel add `appamora.com` and `www.appamora.com`, then in GoDaddy DNS set the records Vercel shows (an `A` record for `@` and a `CNAME` for `www`). Phase 2 will add a wildcard `*.appamora.com` record for client subdomains.
+Production runs on Vercel (region `fra1`, Frankfurt) with a Neon database in `eu-central-1`.
+
+1. **Database** — create a Postgres database on [Neon](https://neon.tech) (EU region). With its *direct* (non-pooler) connection string, run `DATABASE_URL="<direct url>" pnpm db:deploy` to create the tables, then import data with `pnpm db:export` + `psql` (see [Database](#database)).
+2. **Vercel** — import the GitHub repo and set **Root Directory** to `apps/web`. Add these environment variables:
+   - `DATABASE_URL` — Neon's *pooled* connection string, with `sslmode=verify-full`
+   - `BETTER_AUTH_SECRET` — a new random value (`openssl rand -base64 32`), not the local one
+   - `NEXT_PUBLIC_SITE_URL` — `https://appamora.com`
+   - `ENABLE_EXPERIMENTAL_COREPACK` — `1`, so Vercel uses the pnpm version from `package.json`
+   - Optional: `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `NEXT_PUBLIC_RECAPTCHA_SITE_KEY`, `RECAPTCHA_SECRET_KEY`
+
+   Login uses Vercel's production domain automatically; set `BETTER_AUTH_URL` only to override it.
+3. **Domain (GoDaddy)** — in Vercel add `appamora.com` and `www.appamora.com` (redirecting `www` to the main domain), then in GoDaddy DNS set the records Vercel shows. Phase 2 will add a wildcard `*.appamora.com` record for client subdomains.
 
 ## Before launch
 

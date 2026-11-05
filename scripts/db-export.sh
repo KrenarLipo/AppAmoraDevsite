@@ -4,8 +4,10 @@
 #   pnpm db:export                      # exports the local Docker database
 #   pnpm db:export "postgresql://..."   # exports any other database
 #
-# The file holds data only. Create the tables on the target first with
-# `pnpm db:deploy` (Prisma migrations), then import with:
+# The file holds data only, without login sessions, rate-limit counters or
+# verification codes (those stay with the database they were made on).
+# Create the tables on the target first with `pnpm db:deploy` (Prisma
+# migrations), then import with:
 #   psql "<online DATABASE_URL>" -f backups/<file>.sql
 set -euo pipefail
 
@@ -23,6 +25,9 @@ pg_dump "$DB_URL" \
   --no-owner \
   --no-privileges \
   --exclude-table=_prisma_migrations \
+  --exclude-table='"Session"' \
+  --exclude-table='"RateLimit"' \
+  --exclude-table='"Verification"' \
   | sed '/^\\\(un\)\?restrict /d' > "$OUT_FILE"
 
 echo "Exported to $OUT_FILE"
