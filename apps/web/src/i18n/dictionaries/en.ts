@@ -238,6 +238,8 @@ const en = {
       interest: "I'm interested in",
       message: "Message",
       submit: "Send message",
+      privacyNote: "We use your details only to reply to you. See our {privacy}.",
+      privacyLink: "Privacy Policy",
       sending: "Sending…",
       success: "Thanks! Your message has been sent. We'll be in touch soon.",
       errors: {
@@ -269,6 +271,12 @@ const en = {
     rights: "All rights reserved.",
     instagram: "AppAmora on Instagram",
     tiktok: "AppAmora on TikTok",
+  },
+  legal: {
+    nav: "Legal pages",
+    privacy: "Privacy Policy",
+    terms: "Terms and Conditions",
+    updated: "Last updated: {date}",
   },
   auth: {
     metaTitle: "Log in",

@@ -240,6 +240,8 @@ const it: Dictionary = {
       interest: "Mi interessa",
       message: "Messaggio",
       submit: "Invia messaggio",
+      privacyNote: "Usiamo i tuoi dati solo per risponderti. Leggi la nostra {privacy}.",
+      privacyLink: "Informativa sulla privacy",
       sending: "Invio in corso…",
       success: "Grazie! Il tuo messaggio è stato inviato. Ti risponderemo presto.",
       errors: {
@@ -271,6 +273,12 @@ const it: Dictionary = {
     rights: "Tutti i diritti riservati.",
     instagram: "AppAmora su Instagram",
     tiktok: "AppAmora su TikTok",
+  },
+  legal: {
+    nav: "Pagine legali",
+    privacy: "Informativa sulla privacy",
+    terms: "Termini e condizioni",
+    updated: "Ultimo aggiornamento: {date}",
   },
   auth: {
     metaTitle: "Accedi",

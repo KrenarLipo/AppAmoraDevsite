@@ -69,8 +69,16 @@ export async function Footer() {
           </div>
         </div>
         <div className="flex flex-wrap justify-between gap-4 border-t border-panel-line pt-6 text-[13px]">
-          <span>
-            © {await currentYear()} AppAmora. {t.footer.rights}
+          <span className="flex flex-wrap gap-x-4 gap-y-2">
+            <span>
+              © {await currentYear()} AppAmora. {t.footer.rights}
+            </span>
+            <a href={localePath(locale, "/privacy")} className="transition-colors hover:text-paper">
+              {t.legal.privacy}
+            </a>
+            <a href={localePath(locale, "/terms")} className="transition-colors hover:text-paper">
+              {t.legal.terms}
+            </a>
           </span>
           <span className="flex gap-4">
             {locales.map((l) => (
