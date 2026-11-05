@@ -5,7 +5,7 @@ import { getAllSlugs, getPost } from "@/lib/blog";
 import { serviceSlugs } from "@/lib/catalog";
 import { siteConfig } from "@/lib/site";
 
-const staticPaths = ["/", "/services", "/templates", "/pricing", "/blog", "/about", "/contact"];
+const staticPaths = ["/", "/services", "/templates", "/pricing", "/blog", "/about", "/contact", "/privacy", "/terms"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const paths: { path: string; lastModified?: string }[] = [

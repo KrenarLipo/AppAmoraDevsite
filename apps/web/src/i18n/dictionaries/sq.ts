@@ -240,6 +240,8 @@ const sq: Dictionary = {
       interest: "Më intereson",
       message: "Mesazhi",
       submit: "Dërgo mesazhin",
+      privacyNote: "Të dhënat e tua i përdorim vetëm për të të kthyer përgjigje. Shih {privacy}.",
+      privacyLink: "Politikën e privatësisë",
       sending: "Po dërgohet…",
       success: "Faleminderit! Mesazhi yt u dërgua. Do të të kontaktojmë së shpejti.",
       errors: {
@@ -271,6 +273,12 @@ const sq: Dictionary = {
     rights: "Të gjitha të drejtat të rezervuara.",
     instagram: "AppAmora në Instagram",
     tiktok: "AppAmora në TikTok",
+  },
+  legal: {
+    nav: "Faqet ligjore",
+    privacy: "Politika e privatësisë",
+    terms: "Kushtet e përdorimit",
+    updated: "Përditësuar më: {date}",
   },
   auth: {
     metaTitle: "Hyr",

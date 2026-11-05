@@ -1,10 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useActionState } from "react";
 import { sendContactMessage, type ContactField, type ContactState } from "@/app/[locale]/contact/actions";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/types";
+import { localePath } from "@/i18n/utils";
 import { contactInterests, type ContactInterest } from "@/lib/catalog";
 
 type Props = {
@@ -73,7 +75,21 @@ export function ContactForm({ locale, labels, interests, defaultInterest = "AI_A
       >
         {pending ? labels.sending : labels.submit}
       </button>
+      <PrivacyNote locale={locale} note={labels.privacyNote} link={labels.privacyLink} />
     </form>
+  );
+}
+
+function PrivacyNote({ locale, note, link }: { locale: Locale; note: string; link: string }) {
+  const [before, after = ""] = note.split("{privacy}");
+  return (
+    <p className="text-sm leading-relaxed text-muted">
+      {before}
+      <Link href={localePath(locale, "/privacy")} className="font-medium text-ink underline decoration-amora underline-offset-4">
+        {link}
+      </Link>
+      {after}
+    </p>
   );
 }
 
