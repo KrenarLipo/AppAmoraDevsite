@@ -4,7 +4,6 @@ import { SectionHeading } from "@/components/sections/section-heading";
 import { getDictionary, getLocale } from "@/i18n";
 import { format, localePath } from "@/i18n/utils";
 import { getPosts } from "@/lib/blog";
-import { getSiteImages } from "@/lib/settings";
 import { pageMetadata } from "@/lib/metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -15,8 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function BlogPage() {
   const locale = await getLocale();
-  const [t, { blogCovers }] = await Promise.all([getDictionary(locale), getSiteImages()]);
-  const posts = getPosts(locale);
+  const [t, posts] = await Promise.all([getDictionary(locale), getPosts(locale)]);
 
   return (
     <section className="container-page flex flex-col gap-12 pt-16 pb-24">
@@ -30,7 +28,7 @@ export default async function BlogPage() {
               key={post.slug}
               post={post}
               index={i}
-              cover={blogCovers[post.slug]}
+              cover={post.cover}
               locale={locale}
               href={localePath(locale, `/blog/${post.slug}`)}
               readingTime={format(t.blog.readingTime, { minutes: post.readingMinutes })}

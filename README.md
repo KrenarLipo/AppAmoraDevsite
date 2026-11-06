@@ -64,7 +64,8 @@ The site is served under `/en`, `/it` and `/sq`. Visitors hitting `/` are redire
 The admin area lives at `/admin`; you log in on the site itself at `/en/login` (also `/it/login`, `/sq/login`).
 
 - **Messages**: inbox for contact-form and waitlist messages.
-- **Images**: logo (plus an optional version for dark backgrounds), social share image, homepage hero, About photo and blog covers. Uploads are stored in the database (so `pnpm db:export` includes them), re-encoded to WebP and stripped of metadata such as GPS location. Served from `/media/<id>`.
+- **Images**: logo (plus an optional version for dark backgrounds), social share image, homepage hero and About photo. Uploads are stored in the database (so `pnpm db:export` includes them), re-encoded to WebP and stripped of metadata such as GPS location. Served from `/media/<id>`.
+- **Blog**: write, translate and publish posts (see [Blog](#blog)).
 - **Menus**: header links and footer columns, with text in EN / IT / SQ. Without saved changes the site uses the built-in menus.
 
 Saved images and menus are cached on the public site and refreshed instantly on save (`updateTag`).
@@ -79,20 +80,12 @@ pnpm admin:create you@example.com   # create an admin, or reset its password (as
 
 ## Blog
 
-Posts are markdown files in `apps/web/content/blog/<locale>/<slug>.md`:
+Posts are written at **/admin/blog** and stored in the database (`BlogPost` + one `BlogPostTranslation` per language).
 
-```md
----
-title: Post title
-description: One-sentence summary used in cards and search results.
-date: 2026-11-03
-tag: AI SEO
----
-
-Markdown content…
-```
-
-A post missing in Italian or Albanian falls back to the English version, with a notice.
+- English is required; Italian and Albanian are optional. A post without a translation shows the English version, with a notice.
+- The text is markdown, with a toolbar for headings, bold, links, lists, quotes and pictures. Raw HTML is stripped when the post is shown (`src/lib/markdown.ts`).
+- Drafts are only visible in the admin. Saving a post refreshes the blog, the homepage and the sitemap straight away (`updateTag("blog")`).
+- Cover images and pictures inside posts are stored like other uploads (`/media/<id>`). Deleting a post removes its pictures too.
 
 ## Deploying
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import en from "@/i18n/dictionaries/en";
 import { requireAdmin } from "@/lib/admin";
-import { getPosts } from "@/lib/blog";
+import { readAllPostsForEdit } from "@/lib/blog-admin";
 import { serviceSlugs } from "@/lib/catalog";
 import { readMenusForEdit } from "@/lib/settings/admin";
 import { MenuEditor } from "./menu-editor";
@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: "Menus" };
 
 export default async function MenusPage() {
   await requireAdmin();
-  const menus = await readMenusForEdit();
+  const [menus, posts] = await Promise.all([readMenusForEdit(), readAllPostsForEdit()]);
 
   const pages = [
     { path: "/", label: "Home" },
@@ -19,7 +19,7 @@ export default async function MenusPage() {
     { path: "/templates", label: en.nav.templates },
     { path: "/pricing", label: en.nav.pricing },
     { path: "/blog", label: en.nav.blog },
-    ...getPosts("en").map((post) => ({ path: `/blog/${post.slug}`, label: post.title })),
+    ...posts.map((post) => ({ path: `/blog/${post.slug}`, label: post.title })),
     { path: "/about", label: en.nav.about },
     { path: "/contact", label: en.nav.contact },
     { path: "/login", label: en.nav.login },

@@ -78,6 +78,9 @@
   & blockquote {
     @apply my-6 border-l-2 border-amora pl-5 text-ink italic;
   }
+  & img {
+    @apply my-6 h-auto max-w-full rounded-xl;
+  }
   & table {
     @apply mb-6 block w-full overflow-x-auto text-[15px] leading-normal;
   }

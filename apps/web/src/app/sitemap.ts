@@ -1,17 +1,17 @@
 import type { MetadataRoute } from "next";
 import { locales } from "@/i18n/config";
 import { localePath } from "@/i18n/utils";
-import { getAllSlugs, getPost } from "@/lib/blog";
+import { getPosts } from "@/lib/blog";
 import { serviceSlugs } from "@/lib/catalog";
 import { siteConfig } from "@/lib/site";
 
 const staticPaths = ["/", "/services", "/templates", "/pricing", "/blog", "/about", "/contact", "/privacy", "/terms"];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const paths: { path: string; lastModified?: string }[] = [
     ...staticPaths.map((path) => ({ path })),
     ...serviceSlugs.map((slug) => ({ path: `/services/${slug}` })),
-    ...getAllSlugs().map((slug) => ({ path: `/blog/${slug}`, lastModified: getPost("en", slug)?.date })),
+    ...(await getPosts("en")).map((post) => ({ path: `/blog/${post.slug}`, lastModified: post.date })),
   ];
 
   return paths.flatMap(({ path, lastModified }) =>
