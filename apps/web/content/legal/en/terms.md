@@ -21,8 +21,8 @@ You must give accurate information and keep your login details safe. You're resp
 
 ## 3. Plans, trial and payment
 
-- **Starter** comes with a **free {trialDays}-day trial**. We don't ask for a card when you sign up. You add one only when the trial ends and you decide to continue. Starter then costs **€20 per month**.
-- **Pro** costs **€85 per month**.
+- **Starter** comes with a **free {trialDays}-day trial**. We don't ask for a card when you sign up. You add one only when the trial ends and you decide to continue. Starter then costs **{starterPrice} per month**.
+- **Pro** costs **{proPrice} per month**.
 - **Custom** plans are priced individually. [Contact us](/contact) for a quote.
 
 Prices are shown on the [Pricing](/pricing) page. Subscriptions renew every month until you cancel. We'll tell you at least 30 days before any price change takes effect, and you can cancel before then.

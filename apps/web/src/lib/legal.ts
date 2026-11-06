@@ -4,11 +4,13 @@ import matter from "gray-matter";
 import { marked } from "marked";
 import { defaultLocale, type Locale } from "@/i18n/config";
 import { format } from "@/i18n/utils";
+import { getSiteInfo } from "./settings";
+import { localizedLineText, priceValues, type SiteInfo } from "./settings/site-info";
 import { siteConfig } from "./site";
 
 // Legal texts live in content/legal/<locale>/<doc>.md, like blog posts.
-// Placeholders such as {company} or {email} are filled from siteConfig, so the
-// business details are kept in one place (src/lib/site.ts).
+// Placeholders such as {company} or {email} are filled from the site settings
+// (edited at /admin/settings), so the business details are kept in one place.
 const LEGAL_DIR = path.join(process.cwd(), "content", "legal");
 
 export const legalDocs = ["privacy", "terms"] as const;
@@ -24,22 +26,22 @@ export type LegalPage = {
   locale: Locale;
 };
 
-function read(locale: Locale, doc: LegalDoc, pageLocale: Locale): LegalPage | null {
+function read(locale: Locale, doc: LegalDoc, pageLocale: Locale, info: SiteInfo): LegalPage | null {
   const file = path.join(LEGAL_DIR, locale, `${doc}.md`);
   if (!fs.existsSync(file)) return null;
 
   const { data, content } = matter(fs.readFileSync(file, "utf8"));
   const filled = format(content, {
-    company: siteConfig.legal.company,
-    ceo: siteConfig.legal.ceo,
-    taxId: siteConfig.legal.taxId,
-    phone: siteConfig.legal.phone,
-    phoneLink: siteConfig.legal.phone.replace(/\s/g, ""),
-    address: siteConfig.legal.address[pageLocale],
-    country: siteConfig.legal.country[pageLocale],
-    email: siteConfig.email,
+    company: info.company.name,
+    ceo: info.company.ceo,
+    taxId: info.company.taxId,
+    phone: info.contact.phone,
+    phoneLink: info.contact.phone.replace(/[^+\d]/g, ""),
+    address: localizedLineText(info.company.address, pageLocale),
+    country: localizedLineText(info.company.country, pageLocale),
+    email: info.contact.email,
     site: siteConfig.url.replace(/^https?:\/\//, ""),
-    trialDays: siteConfig.trialDays,
+    ...priceValues(info, pageLocale),
   })
     // Site links like (/pricing) get the visitor's language: (/it/pricing).
     .replace(/\]\(\/(?!\/)/g, `](/${pageLocale}/`);
@@ -53,8 +55,9 @@ function read(locale: Locale, doc: LegalDoc, pageLocale: Locale): LegalPage | nu
   };
 }
 
-export function getLegalPage(locale: Locale, doc: LegalDoc): LegalPage {
-  const page = read(locale, doc, locale) ?? read(defaultLocale, doc, locale);
+export async function getLegalPage(locale: Locale, doc: LegalDoc): Promise<LegalPage> {
+  const info = await getSiteInfo();
+  const page = read(locale, doc, locale, info) ?? read(defaultLocale, doc, locale, info);
   if (!page) throw new Error(`Missing content/legal/${defaultLocale}/${doc}.md`);
   return page;
 }

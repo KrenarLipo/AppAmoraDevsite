@@ -8,7 +8,7 @@ import { pageMetadata } from "@/lib/metadata";
 
 export async function legalMetadata(doc: LegalDoc): Promise<Metadata> {
   const locale = await getLocale();
-  const page = getLegalPage(locale, doc);
+  const page = await getLegalPage(locale, doc);
   return pageMetadata({ locale, path: `/${doc}`, title: page.title, description: page.description });
 }
 
@@ -16,7 +16,7 @@ export async function legalMetadata(doc: LegalDoc): Promise<Metadata> {
 export async function LegalPageView({ doc }: { doc: LegalDoc }) {
   const locale = await getLocale();
   const t = await getDictionary(locale);
-  const page = getLegalPage(locale, doc);
+  const page = await getLegalPage(locale, doc);
 
   return (
     <article lang={page.locale} className="container-page max-w-[820px] pt-16 pb-24">

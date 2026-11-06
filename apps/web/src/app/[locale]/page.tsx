@@ -7,10 +7,12 @@ import { ServicesSection } from "@/components/sections/services";
 import { StepsSection } from "@/components/sections/steps";
 import { getDictionary } from "@/i18n";
 import { jsonLd } from "@/lib/metadata";
+import { getSiteInfo } from "@/lib/settings";
+import { activeSocialLinks } from "@/lib/settings/site-info";
 import { siteConfig } from "@/lib/site";
 
 export default async function HomePage() {
-  const t = await getDictionary();
+  const [t, info] = await Promise.all([getDictionary(), getSiteInfo()]);
 
   const organization = {
     "@context": "https://schema.org",
@@ -18,9 +20,10 @@ export default async function HomePage() {
     name: siteConfig.name,
     url: siteConfig.url,
     logo: `${siteConfig.url}/icon.svg`,
-    email: siteConfig.email,
+    email: info.contact.email,
+    ...(info.contact.phone && { telephone: info.contact.phone }),
     description: t.meta.description,
-    sameAs: Object.values(siteConfig.social),
+    sameAs: activeSocialLinks(info).map((link) => link.href),
   };
 
   return (

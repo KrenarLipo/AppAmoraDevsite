@@ -1,12 +1,12 @@
 import { cacheLife } from "next/cache";
-import { InstagramIcon, TikTokIcon } from "@/components/icons";
+import { SocialIcon } from "@/components/social-links";
 import { SiteLogo } from "@/components/site-logo";
 import { localeNames, locales } from "@/i18n/config";
 import { getDictionary, getLocale } from "@/i18n";
-import { localePath } from "@/i18n/utils";
-import { getMenus } from "@/lib/settings";
+import { format, localePath } from "@/i18n/utils";
+import { getMenus, getSiteInfo } from "@/lib/settings";
+import { activeSocialLinks } from "@/lib/settings/site-info";
 import { localizedText, resolveHref } from "@/lib/settings/schema";
-import { siteConfig } from "@/lib/site";
 import { NavLink } from "./nav-link";
 
 async function currentYear() {
@@ -17,7 +17,7 @@ async function currentYear() {
 
 export async function Footer() {
   const locale = await getLocale();
-  const [t, menus] = await Promise.all([getDictionary(locale), getMenus()]);
+  const [t, menus, info] = await Promise.all([getDictionary(locale), getMenus(), getSiteInfo()]);
 
   const columns = menus.footer
     .map((column) => ({
@@ -36,25 +36,19 @@ export async function Footer() {
           <div className="flex max-w-xs flex-col gap-4">
             <SiteLogo tone="dark" height={30} />
             <p className="text-sm leading-relaxed">{t.footer.tagline}</p>
-            <div className="flex gap-2">
-              <a
-                href={siteConfig.social.instagram}
-                aria-label={t.footer.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex size-11 items-center justify-center rounded-xl border border-panel-line text-paper transition-colors hover:border-paper"
-              >
-                <InstagramIcon />
-              </a>
-              <a
-                href={siteConfig.social.tiktok}
-                aria-label={t.footer.tiktok}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex size-11 items-center justify-center rounded-xl border border-panel-line text-paper transition-colors hover:border-paper"
-              >
-                <TikTokIcon />
-              </a>
+            <div className="flex flex-wrap gap-2">
+              {activeSocialLinks(info).map((link) => (
+                <a
+                  key={link.network}
+                  href={link.href}
+                  aria-label={format(t.footer.social, { network: link.name })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex size-11 items-center justify-center rounded-xl border border-panel-line text-paper transition-colors hover:border-paper"
+                >
+                  <SocialIcon network={link.network} />
+                </a>
+              ))}
             </div>
           </div>
           <div className="flex flex-wrap gap-x-14 gap-y-8 text-sm">

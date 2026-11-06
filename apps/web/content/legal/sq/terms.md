@@ -21,8 +21,8 @@ Duhet të japësh informacion të saktë dhe t'i ruash të dhënat e hyrjes. Je 
 
 ## 3. Planet, prova dhe pagesa
 
-- **Starter** vjen me një **provë falas {trialDays}-ditore**. Nuk të kërkojmë kartë kur regjistrohesh: e shton vetëm në fund të provës, nëse vendos të vazhdosh. Pas kësaj Starter kushton **20 € në muaj**.
-- **Pro** kushton **85 € në muaj**.
+- **Starter** vjen me një **provë falas {trialDays}-ditore**. Nuk të kërkojmë kartë kur regjistrohesh: e shton vetëm në fund të provës, nëse vendos të vazhdosh. Pas kësaj Starter kushton **{starterPrice} në muaj**.
+- **Pro** kushton **{proPrice} në muaj**.
 - Planet **Custom** kanë çmim individual. [Na kontakto](/contact) për një ofertë.
 
 Çmimet tregohen në faqen [Çmimet](/pricing). Abonimet rinovohen çdo muaj derisa t'i anulosh. Do të të njoftojmë të paktën 30 ditë para çdo ndryshimi çmimi, që të mund të anulosh para se të hyjë në fuqi.

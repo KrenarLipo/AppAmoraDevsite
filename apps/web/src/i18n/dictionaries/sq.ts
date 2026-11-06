@@ -158,7 +158,7 @@ const sq: Dictionary = {
         tagline: "2 javë falas, pastaj",
         cta: "Fillo provën falas",
         features: [
-          "Provë falas 14-ditore",
+          "Provë falas {trialDays}-ditore",
           "Të 6 shabllonet",
           "emrijot.appamora.com",
           "2 gjuhë",
@@ -191,11 +191,11 @@ const sq: Dictionary = {
     faq: [
       {
         q: "A më duhet kartë për të nisur provën?",
-        a: "Jo. Mund ta përdorësh AppAmora për 14 ditë pa të dhëna pagese. Të kërkojmë kartë vetëm kur mbaron prova dhe vendos të vazhdosh.",
+        a: "Jo. Mund ta përdorësh AppAmora për {trialDays} ditë pa të dhëna pagese. Të kërkojmë kartë vetëm kur mbaron prova dhe vendos të vazhdosh.",
       },
       {
         q: "Çfarë ndodh pas 2 javëve?",
-        a: "Faqja jote mbetet e ruajtur. Shto një mënyrë pagese për ta mbajtur online me Starter (20 €/muaj) ose kalo në Pro (85 €/muaj).",
+        a: "Faqja jote mbetet e ruajtur. Shto një mënyrë pagese për ta mbajtur online me Starter ({starterPrice}/muaj) ose kalo në Pro ({proPrice}/muaj).",
       },
       {
         q: "A mund të përdor domenin tim?",
@@ -271,8 +271,7 @@ const sq: Dictionary = {
     platform: "Platforma",
     company: "Kompania",
     rights: "Të gjitha të drejtat të rezervuara.",
-    instagram: "AppAmora në Instagram",
-    tiktok: "AppAmora në TikTok",
+    social: "AppAmora në {network}",
   },
   legal: {
     nav: "Faqet ligjore",

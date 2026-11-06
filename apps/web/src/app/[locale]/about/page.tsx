@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { InstagramIcon, TikTokIcon } from "@/components/icons";
+import { SocialIcon } from "@/components/social-links";
 import { CtaBand } from "@/components/sections/cta-band";
 import { getDictionary, getLocale } from "@/i18n";
 import { pageMetadata } from "@/lib/metadata";
-import { getSiteImages } from "@/lib/settings";
+import { getSiteImages, getSiteInfo } from "@/lib/settings";
+import { activeSocialLinks } from "@/lib/settings/site-info";
 import { localizedText, mediaUrl } from "@/lib/settings/schema";
-import { siteConfig } from "@/lib/site";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function AboutPage() {
   const locale = await getLocale();
-  const [t, { about: photo }] = await Promise.all([getDictionary(locale), getSiteImages()]);
+  const [t, { about: photo }, info] = await Promise.all([getDictionary(locale), getSiteImages(), getSiteInfo()]);
 
   return (
     <>
@@ -43,22 +43,17 @@ export default async function AboutPage() {
         <aside className="flex flex-col justify-between gap-8 rounded-[18px] bg-ink p-8 text-paper">
           <p className="eyebrow text-amora-bright">{t.about.follow}</p>
           <div className="flex flex-col gap-3">
-            <a
-              href={siteConfig.social.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex h-14 items-center gap-3 rounded-xl border border-panel-line px-4 font-semibold transition-colors hover:border-paper"
-            >
-              <InstagramIcon size={22} /> Instagram
-            </a>
-            <a
-              href={siteConfig.social.tiktok}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex h-14 items-center gap-3 rounded-xl border border-panel-line px-4 font-semibold transition-colors hover:border-paper"
-            >
-              <TikTokIcon size={22} /> TikTok
-            </a>
+            {activeSocialLinks(info).map((link) => (
+              <a
+                key={link.network}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-14 items-center gap-3 rounded-xl border border-panel-line px-4 font-semibold transition-colors hover:border-paper"
+              >
+                <SocialIcon network={link.network} size={22} /> {link.name}
+              </a>
+            ))}
           </div>
         </aside>
         </div>

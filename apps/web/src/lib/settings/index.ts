@@ -1,6 +1,7 @@
 import { getDb } from "@appamora/db";
 import { cacheLife, cacheTag } from "next/cache";
 import type { z } from "zod";
+import { defaultSiteInfo, siteInfoSchema, type SiteInfo } from "./site-info";
 import { defaultImages, defaultMenus, imagesSchema, menusSchema, type Menus, type SiteImages } from "./schema";
 
 /** Saving any setting calls updateTag(SETTINGS_TAG), so pages pick up the change on the next request. */
@@ -38,4 +39,14 @@ export async function getSiteImages(): Promise<SiteImages> {
   if (result.ok) cacheLife("max");
   else cacheLife("minutes");
   return (result.ok && result.value) || defaultImages;
+}
+
+/** Contact, social links, prices and company details (edited at /admin/settings). */
+export async function getSiteInfo(): Promise<SiteInfo> {
+  "use cache";
+  cacheTag(SETTINGS_TAG);
+  const result = await readSetting("site", siteInfoSchema);
+  if (result.ok) cacheLife("max");
+  else cacheLife("minutes");
+  return (result.ok && result.value) || defaultSiteInfo;
 }
