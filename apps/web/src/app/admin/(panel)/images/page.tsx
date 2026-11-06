@@ -1,6 +1,6 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { requireAdmin } from "@/lib/admin";
-import { getPosts } from "@/lib/blog";
 import { readImagesForEdit } from "@/lib/settings/admin";
 import { ImageSlot } from "./image-slot";
 
@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Images" };
 
 export default async function ImagesPage() {
   await requireAdmin();
-  const [images, posts] = await Promise.all([readImagesForEdit(), getPosts("en")]);
+  const images = await readImagesForEdit();
 
   return (
     <div className="flex max-w-5xl flex-col gap-10">
@@ -68,18 +68,13 @@ export default async function ImagesPage() {
         />
       </Section>
 
-      <Section title="Blog covers">
-        {posts.map((post) => (
-          <ImageSlot
-            key={post.slug}
-            target={`blog:${post.slug}`}
-            title={post.title}
-            description="Cover image on the blog cards and at the top of the article."
-            image={images.blogCovers[post.slug] ?? null}
-            emptyLabel="Using a colored block"
-          />
-        ))}
-      </Section>
+      <p className="text-sm text-muted">
+        Blog cover images are set on each post in{" "}
+        <Link href="/admin/blog" className="font-semibold text-ink underline decoration-amora underline-offset-4">
+          Blog
+        </Link>
+        .
+      </p>
     </div>
   );
 }

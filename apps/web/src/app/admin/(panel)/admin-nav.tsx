@@ -8,8 +8,8 @@ const items = [
   { href: "/admin", label: "Overview" },
   { href: "/admin/messages", label: "Messages" },
   { href: "/admin/images", label: "Images" },
+  { href: "/admin/blog", label: "Blog" },
   { href: "/admin/menus", label: "Menus" },
-  { href: null, label: "Blog" },
   { href: null, label: "Site settings" },
 ];
 

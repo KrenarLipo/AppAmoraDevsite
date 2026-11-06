@@ -2,42 +2,68 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { CtaBand } from "@/components/sections/cta-band";
 import { getDictionary, getLocale } from "@/i18n";
 import { format, localePath } from "@/i18n/utils";
-import { formatDate, getAllSlugs, getPost } from "@/lib/blog";
+import { formatDate, getPost, getPublishedSlugs } from "@/lib/blog";
 import { jsonLd, pageMetadata } from "@/lib/metadata";
-import { getSiteImages } from "@/lib/settings";
 import { mediaUrl } from "@/lib/settings/schema";
 import { siteConfig } from "@/lib/site";
 
-export function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }));
+// Posts published after the build are rendered on their first visit, then cached.
+// Cache Components needs at least one param, so an empty blog prerenders a placeholder (a 404).
+export async function generateStaticParams() {
+  const slugs = await getPublishedSlugs();
+  return slugs.length > 0 ? slugs.map((slug) => ({ slug })) : [{ slug: "__none__" }];
 }
 
 export async function generateMetadata({ params }: PageProps<"/[locale]/blog/[slug]">): Promise<Metadata> {
   const { slug } = await params;
   const locale = await getLocale();
-  const post = getPost(locale, slug);
+  const post = await getPost(locale, slug);
   if (!post) return {};
-  const { blogCovers } = await getSiteImages();
   return pageMetadata({
     locale,
     path: `/blog/${slug}`,
     title: post.title,
     description: post.description,
     type: "article",
-    image: blogCovers[slug],
+    image: post.cover ?? undefined,
   });
 }
 
-export default async function PostPage({ params }: PageProps<"/[locale]/blog/[slug]">) {
+// The slug is read inside <Suspense>: a post published after the build first gets the
+// shared shell (with the skeleton below), then its own page, which is cached from then on.
+export default function PostPage({ params }: PageProps<"/[locale]/blog/[slug]">) {
+  return (
+    <>
+      <Suspense fallback={<PostSkeleton />}>
+        <PostContent params={params} />
+      </Suspense>
+      <CtaBand />
+    </>
+  );
+}
+
+function PostSkeleton() {
+  return (
+    <div aria-hidden className="container-page flex max-w-[760px] animate-pulse flex-col gap-5 pt-16 pb-24">
+      <div className="h-4 w-24 rounded bg-sand" />
+      <div className="mt-8 h-12 w-4/5 rounded bg-sand" />
+      <div className="h-6 w-3/5 rounded bg-sand" />
+      <div className="mt-6 h-64 rounded-2xl bg-sand" />
+    </div>
+  );
+}
+
+async function PostContent({ params }: Pick<PageProps<"/[locale]/blog/[slug]">, "params">) {
   const { slug } = await params;
   const locale = await getLocale();
-  const post = getPost(locale, slug);
+  const post = await getPost(locale, slug);
   if (!post) notFound();
-  const [t, { blogCovers }] = await Promise.all([getDictionary(locale), getSiteImages()]);
-  const cover = blogCovers[slug];
+  const t = await getDictionary(locale);
+  const cover = post.cover;
 
   const schema = {
     "@context": "https://schema.org",
@@ -84,10 +110,9 @@ export default async function PostPage({ params }: PageProps<"/[locale]/blog/[sl
             className="mb-10 h-auto w-full rounded-2xl"
           />
         )}
-        {/* Markdown from our own content folder, not user input. */}
+        {/* Markdown written in the admin; raw HTML is stripped (src/lib/markdown.ts). */}
         <div className="prose-amora" dangerouslySetInnerHTML={{ __html: post.html }} />
       </article>
-      <CtaBand />
     </>
   );
 }

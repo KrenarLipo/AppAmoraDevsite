@@ -17,7 +17,7 @@ type Props = {
   locale: Locale;
   readingTime: string;
   index: number;
-  cover?: ImageRef;
+  cover: ImageRef;
 };
 
 export function PostCard({ post, href, locale, readingTime, index, cover }: Props) {

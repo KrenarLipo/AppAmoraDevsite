@@ -52,7 +52,7 @@ export const menusSchema = z.object({
 });
 export type Menus = z.infer<typeof menusSchema>;
 
-const imageRef = z
+export const imageRefSchema = z
   .object({
     id: z.string().min(1),
     width: z.number().int().positive(),
@@ -60,7 +60,8 @@ const imageRef = z
     alt: optionalLocalized.optional(),
   })
   .nullable();
-export type ImageRef = z.infer<typeof imageRef>;
+export type ImageRef = z.infer<typeof imageRefSchema>;
+const imageRef = imageRefSchema;
 
 export const imagesSchema = z.object({
   logo: imageRef.default(null),
@@ -68,8 +69,6 @@ export const imagesSchema = z.object({
   social: imageRef.default(null),
   hero: imageRef.default(null),
   about: imageRef.default(null),
-  /** Blog cover images by post slug. */
-  blogCovers: z.record(z.string(), imageRef).default({}),
 });
 export type SiteImages = z.infer<typeof imagesSchema>;
 

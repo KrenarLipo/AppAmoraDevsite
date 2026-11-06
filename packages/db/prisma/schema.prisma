@@ -129,3 +129,42 @@ model SiteSetting {
   value     Json
   updatedAt DateTime @updatedAt
 }
+
+// ─── Blog ───────────────────────────────────────────────────────────────────
+
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+}
+
+/// A blog post. The text lives in one BlogPostTranslation per language; English is required.
+model BlogPost {
+  id           String                @id @default(cuid())
+  slug         String                @unique
+  status       PostStatus            @default(DRAFT)
+  /// The date shown on the post.
+  publishedAt  DateTime              @db.Date
+  tag          String                @default("")
+  /// Cover image: { id, width, height, alt? } pointing at a Media row.
+  cover        Json?
+  translations BlogPostTranslation[]
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+
+  @@index([status, publishedAt])
+}
+
+model BlogPostTranslation {
+  id          String   @id @default(cuid())
+  postId      String
+  post        BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  /// "en", "it" or "sq".
+  locale      String
+  title       String
+  description String   @default("")
+  /// Markdown.
+  body        String
+  updatedAt   DateTime @updatedAt
+
+  @@unique([postId, locale])
+}
