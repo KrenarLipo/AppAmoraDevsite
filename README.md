@@ -66,6 +66,7 @@ The admin area lives at `/admin`; you log in on the site itself at `/en/login` (
 - **Messages**: inbox for contact-form and waitlist messages.
 - **Images**: logo (plus an optional version for dark backgrounds), social share image, homepage hero and About photo. Uploads are stored in the database (so `pnpm db:export` includes them), re-encoded to WebP and stripped of metadata such as GPS location. Served from `/media/<id>`.
 - **Blog**: write, translate and publish posts (see [Blog](#blog)).
+- **Site settings**: contact email and phone, social links (empty ones are hidden), prices and free-trial length, and the company details used in the Privacy Policy and Terms.
 - **Menus**: header links and footer columns, with text in EN / IT / SQ. Without saved changes the site uses the built-in menus.
 
 Saved images and menus are cached on the public site and refreshed instantly on save (`updateTag`).
@@ -104,6 +105,5 @@ Production runs on Vercel (region `fra1`, Frankfurt) with a Neon database in `eu
 
 ## Before launch
 
-- Confirm the contact email and Instagram/TikTok URLs in `apps/web/src/lib/site.ts`.
 - Replace the `[YOUR STORY …]` placeholder on the About page (all three dictionaries).
 - Have a native speaker review the Albanian and Italian copy.

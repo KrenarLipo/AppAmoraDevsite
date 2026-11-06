@@ -4,7 +4,7 @@ import { ContactForm, ContactFormFromQuery } from "@/components/contact-form";
 import { MailIcon } from "@/components/icons";
 import { getDictionary, getLocale } from "@/i18n";
 import { pageMetadata } from "@/lib/metadata";
-import { siteConfig } from "@/lib/site";
+import { getSiteInfo } from "@/lib/settings";
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ContactPage() {
   const locale = await getLocale();
-  const t = await getDictionary(locale);
+  const [t, info] = await Promise.all([getDictionary(locale), getSiteInfo()]);
   const formProps = { locale, labels: t.contact.form, interests: t.contact.interests };
 
   return (
@@ -29,8 +29,8 @@ export default async function ContactPage() {
           <p className="mt-auto flex flex-wrap items-center gap-2 pt-6 text-muted">
             <MailIcon size={20} className="text-ink" />
             {t.contact.emailUs}
-            <a href={`mailto:${siteConfig.email}`} className="font-semibold text-ink underline decoration-amora decoration-2 underline-offset-4">
-              {siteConfig.email}
+            <a href={`mailto:${info.contact.email}`} className="font-semibold text-ink underline decoration-amora decoration-2 underline-offset-4">
+              {info.contact.email}
             </a>
           </p>
         </div>

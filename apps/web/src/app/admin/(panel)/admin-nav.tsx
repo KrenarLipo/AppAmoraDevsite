@@ -10,7 +10,7 @@ const items = [
   { href: "/admin/images", label: "Images" },
   { href: "/admin/blog", label: "Blog" },
   { href: "/admin/menus", label: "Menus" },
-  { href: null, label: "Site settings" },
+  { href: "/admin/settings", label: "Site settings" },
 ];
 
 // On routes with an unknown param (/admin/messages/[id]) the pathname is only known at

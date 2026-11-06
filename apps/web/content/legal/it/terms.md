@@ -21,8 +21,8 @@ Devi fornire informazioni corrette e custodire i tuoi dati di accesso. Sei respo
 
 ## 3. Piani, prova e pagamento
 
-- **Starter** include una **prova gratuita di {trialDays} giorni**. Non chiediamo la carta al momento della registrazione: la aggiungi solo alla fine della prova, se decidi di continuare. Starter costa poi **20 € al mese**.
-- **Pro** costa **85 € al mese**.
+- **Starter** include una **prova gratuita di {trialDays} giorni**. Non chiediamo la carta al momento della registrazione: la aggiungi solo alla fine della prova, se decidi di continuare. Starter costa poi **{starterPrice} al mese**.
+- **Pro** costa **{proPrice} al mese**.
 - I piani **Custom** hanno un prezzo su misura. [Contattaci](/contact) per un preventivo.
 
 I prezzi sono indicati nella pagina [Prezzi](/pricing). Gli abbonamenti si rinnovano ogni mese finché non li disdici. Ti avviseremo almeno 30 giorni prima di qualsiasi modifica di prezzo, così potrai disdire prima che entri in vigore.

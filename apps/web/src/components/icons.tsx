@@ -68,6 +68,33 @@ export const TikTokIcon = (p: IconProps) => (
   </Icon>
 );
 
+export const FacebookIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3" y="3" width="18" height="18" rx="5" />
+    <path d="M15.5 7.5H14a2.5 2.5 0 0 0-2.5 2.5v11M8.5 13h6" />
+  </Icon>
+);
+
+export const LinkedInIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3" y="3" width="18" height="18" rx="4" />
+    <path d="M8 10.5V17M8 7.5v.01M12 17v-6.5M12 13.5a2.5 2.5 0 0 1 5 0V17" />
+  </Icon>
+);
+
+export const YouTubeIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="2.5" y="5" width="19" height="14" rx="4" />
+    <path d="M10 9.2v5.6l4.8-2.8z" fill="currentColor" />
+  </Icon>
+);
+
+export const XIcon = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M4 4l16 16M20 4l-6.8 6.8M10.8 13.2L4 20" />
+  </Icon>
+);
+
 export const MenuIcon = (p: IconProps) => (
   <Icon {...p}>
     <path d="M4 7h16M4 12h16M4 17h16" />

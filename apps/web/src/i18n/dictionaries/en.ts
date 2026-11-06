@@ -156,7 +156,7 @@ const en = {
         tagline: "2 weeks free, then",
         cta: "Start free trial",
         features: [
-          "14-day free trial",
+          "{trialDays}-day free trial",
           "All 6 templates",
           "yourname.appamora.com",
           "2 languages",
@@ -189,11 +189,11 @@ const en = {
     faq: [
       {
         q: "Do I need a card to start the trial?",
-        a: "No. You can use AppAmora for 14 days without any payment details. We only ask for a card when the trial ends and you decide to continue.",
+        a: "No. You can use AppAmora for {trialDays} days without any payment details. We only ask for a card when the trial ends and you decide to continue.",
       },
       {
         q: "What happens after the 2 weeks?",
-        a: "Your site stays saved. Add a payment method to keep it online on Starter (€20/month) or upgrade to Pro (€85/month).",
+        a: "Your site stays saved. Add a payment method to keep it online on Starter ({starterPrice}/month) or upgrade to Pro ({proPrice}/month).",
       },
       {
         q: "Can I use my own domain?",
@@ -269,8 +269,7 @@ const en = {
     platform: "Platform",
     company: "Company",
     rights: "All rights reserved.",
-    instagram: "AppAmora on Instagram",
-    tiktok: "AppAmora on TikTok",
+    social: "AppAmora on {network}",
   },
   legal: {
     nav: "Legal pages",

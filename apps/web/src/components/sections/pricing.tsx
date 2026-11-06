@@ -1,19 +1,18 @@
 import { ButtonLink } from "@/components/button-link";
 import { CheckIcon } from "@/components/icons";
-import type { Locale } from "@/i18n/config";
 import { getDictionary, getLocale } from "@/i18n";
-import { localePath } from "@/i18n/utils";
+import { format, localePath } from "@/i18n/utils";
 import { plans, type PlanId } from "@/lib/catalog";
+import { getSiteInfo } from "@/lib/settings";
+import { formatEur, priceValues } from "@/lib/settings/site-info";
 import { trialPath } from "@/lib/site";
 import { SectionHeading } from "./section-heading";
 
-function formatEur(amount: number, locale: Locale) {
-  return new Intl.NumberFormat(locale, { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(amount);
-}
-
 export async function PricingSection({ withFaq = false, headingAs = "h2" }: { withFaq?: boolean; headingAs?: "h1" | "h2" }) {
   const locale = await getLocale();
-  const t = await getDictionary(locale);
+  const [t, info] = await Promise.all([getDictionary(locale), getSiteInfo()]);
+  const values = priceValues(info, locale);
+  const prices: Record<PlanId, number | null> = { starter: info.pricing.starter, pro: info.pricing.pro, custom: null };
 
   const ctaHref: Record<PlanId, string> = {
     starter: localePath(locale, trialPath),
@@ -50,9 +49,9 @@ export async function PricingSection({ withFaq = false, headingAs = "h2" }: { wi
                   <h3 className="font-display text-[22px] font-bold">{copy.name}</h3>
                   <p className={`text-[15px] ${dark ? "text-mist" : "text-muted"}`}>{copy.tagline}</p>
                 </div>
-                {plan.priceEur !== null ? (
+                {prices[id] !== null ? (
                   <p className="font-display text-5xl font-bold tracking-[-0.03em]">
-                    {formatEur(plan.priceEur, locale)}
+                    {formatEur(prices[id], locale)}
                     <span className={`font-sans text-base font-medium tracking-normal ${dark ? "text-mist" : "text-muted"}`}>
                       {" "}
                       {t.pricing.perMonth}
@@ -68,7 +67,7 @@ export async function PricingSection({ withFaq = false, headingAs = "h2" }: { wi
                   {copy.features.map((feature) => (
                     <li key={feature} className="flex gap-2.5">
                       <CheckIcon size={18} className={`mt-0.5 shrink-0 ${dark ? "text-amora-bright" : "text-amora"}`} />
-                      {feature}
+                      {format(feature, values)}
                     </li>
                   ))}
                 </ul>
@@ -91,7 +90,7 @@ export async function PricingSection({ withFaq = false, headingAs = "h2" }: { wi
                     +
                   </span>
                 </summary>
-                <p className="leading-relaxed text-muted">{item.a}</p>
+                <p className="leading-relaxed text-muted">{format(item.a, values)}</p>
               </details>
             ))}
           </div>

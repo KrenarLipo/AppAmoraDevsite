@@ -25,9 +25,10 @@ export const templates: {
 ];
 
 export const plans = {
-  starter: { priceEur: 20, highlighted: false },
-  pro: { priceEur: 85, highlighted: true },
-  custom: { priceEur: null, highlighted: false },
+  // Prices are edited at /admin/settings (getSiteInfo).
+  starter: { highlighted: false },
+  pro: { highlighted: true },
+  custom: { highlighted: false },
 } as const;
 export type PlanId = keyof typeof plans;
 

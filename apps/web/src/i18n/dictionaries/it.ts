@@ -158,7 +158,7 @@ const it: Dictionary = {
         tagline: "2 settimane gratis, poi",
         cta: "Inizia la prova gratuita",
         features: [
-          "Prova gratuita di 14 giorni",
+          "Prova gratuita di {trialDays} giorni",
           "Tutti i 6 template",
           "tuonome.appamora.com",
           "2 lingue",
@@ -191,11 +191,11 @@ const it: Dictionary = {
     faq: [
       {
         q: "Serve una carta per iniziare la prova?",
-        a: "No. Puoi usare AppAmora per 14 giorni senza dati di pagamento. Ti chiediamo una carta solo alla fine della prova, se decidi di continuare.",
+        a: "No. Puoi usare AppAmora per {trialDays} giorni senza dati di pagamento. Ti chiediamo una carta solo alla fine della prova, se decidi di continuare.",
       },
       {
         q: "Cosa succede dopo le 2 settimane?",
-        a: "Il tuo sito resta salvato. Aggiungi un metodo di pagamento per mantenerlo online con Starter (20 €/mese) oppure passa a Pro (85 €/mese).",
+        a: "Il tuo sito resta salvato. Aggiungi un metodo di pagamento per mantenerlo online con Starter ({starterPrice}/mese) oppure passa a Pro ({proPrice}/mese).",
       },
       {
         q: "Posso usare il mio dominio?",
@@ -271,8 +271,7 @@ const it: Dictionary = {
     platform: "Piattaforma",
     company: "Azienda",
     rights: "Tutti i diritti riservati.",
-    instagram: "AppAmora su Instagram",
-    tiktok: "AppAmora su TikTok",
+    social: "AppAmora su {network}",
   },
   legal: {
     nav: "Pagine legali",
