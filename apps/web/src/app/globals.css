@@ -91,3 +91,51 @@
     @apply border-b border-line py-3 pr-4 align-top;
   }
 }
+
+/* Page text on clients' sites: inherits the template's colors and fonts. */
+@utility site-prose {
+  @apply text-[17px] leading-[1.75];
+  color: var(--site-text);
+
+  & h2 {
+    @apply mt-10 mb-4 text-[28px] leading-tight font-bold;
+    font-family: var(--site-heading-font);
+  }
+  & h3 {
+    @apply mt-8 mb-3 text-[22px] font-semibold;
+    font-family: var(--site-heading-font);
+  }
+  & p,
+  & ul,
+  & ol {
+    @apply mb-5;
+  }
+  & ul,
+  & ol {
+    @apply flex flex-col gap-2 pl-6;
+  }
+  & ul {
+    @apply list-disc;
+  }
+  & ol {
+    @apply list-decimal;
+  }
+  & a {
+    @apply font-medium underline underline-offset-4;
+    color: var(--site-primary);
+  }
+  & strong {
+    @apply font-semibold;
+  }
+  & blockquote {
+    @apply my-6 border-l-2 pl-5 italic;
+    border-color: var(--site-primary);
+  }
+  & img {
+    @apply my-6 h-auto max-w-full;
+    border-radius: var(--site-radius);
+  }
+  & > :first-child {
+    @apply mt-0;
+  }
+}

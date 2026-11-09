@@ -6,6 +6,7 @@ import { Suspense } from "react";
 
 const items = [
   { href: "/admin", label: "Overview" },
+  { href: "/admin/clients", label: "Clients" },
   { href: "/admin/messages", label: "Messages" },
   { href: "/admin/images", label: "Images" },
   { href: "/admin/blog", label: "Blog" },

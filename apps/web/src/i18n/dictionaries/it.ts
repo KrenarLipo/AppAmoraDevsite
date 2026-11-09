@@ -160,10 +160,10 @@ const it: Dictionary = {
         features: [
           "Prova gratuita di {trialDays} giorni",
           "Tutti i 6 template",
-          "tuonome.appamora.com",
-          "2 lingue",
-          "Modulo iscrizioni",
-          "Colori e font",
+          "Fino a 6 pagine, 2 lingue",
+          "Colori, font e slideshow di foto",
+          "Modulo e lista iscritti",
+          "Pulsante chat WhatsApp",
         ],
       },
       pro: {
@@ -172,10 +172,11 @@ const it: Dictionary = {
         cta: "Passa a Pro",
         features: [
           "Tutto ciò che c'è in Starter",
-          "Tutte e 5 le lingue",
-          "Il tuo dominio",
-          "Feed Instagram e TikTok (presto)",
+          "Pagine illimitate, tutte e 5 le lingue",
           "Nessun badge AppAmora",
+          "3 accessi per il team",
+          "Supporto prioritario + 1 ora di modifiche al mese",
+          "Il tuo dominio (presto)",
         ],
       },
       custom: {

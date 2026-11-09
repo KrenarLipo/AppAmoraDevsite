@@ -5,6 +5,16 @@ import { defaultLocale, hasLocale, LOCALE_COOKIE, type Locale } from "@/i18n/con
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // Clients' websites have their own languages in the path.
+  if (pathname === "/s" || pathname.startsWith("/s/")) return;
+
+  if (pathname === "/dashboard" || pathname.startsWith("/dashboard/")) {
+    if (!getSessionCookie(request)) {
+      return NextResponse.redirect(new URL(`/${pickLocale(request)}/login`, request.url));
+    }
+    return;
+  }
+
   if (pathname === "/admin" || pathname.startsWith("/admin/")) {
     // Fast path only: without a session cookie, skip rendering and go to login.
     // Pages still verify the session and role on the server.
