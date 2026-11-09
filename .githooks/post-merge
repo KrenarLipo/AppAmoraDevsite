@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Runs after every `git pull`: installs new packages and applies new database
+# changes to the local database, so the project keeps working without extra steps.
+# Enabled by ./setup.sh (git config core.hooksPath .githooks).
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT" || exit 0
+# shellcheck source=../scripts/lib/env.sh
+source "$ROOT/scripts/lib/env.sh"
+
+changed="$(git diff --name-only ORIG_HEAD HEAD 2>/dev/null || true)"
+
+if grep -q '^pnpm-lock.yaml$' <<<"$changed"; then
+  echo "AppAmora: new packages, installing…"
+  pnpm install --frozen-lockfile || echo "AppAmora: pnpm install failed; run it by hand."
+fi
+
+if grep -q '^packages/db/prisma/' <<<"$changed"; then
+  echo "AppAmora: database changes, updating the local database…"
+  if docker info >/dev/null 2>&1; then
+    pnpm db:up >/dev/null && pnpm --filter @appamora/db exec prisma migrate deploy \
+      && pnpm --filter @appamora/db run generate >/dev/null \
+      || echo "AppAmora: database update failed; run: pnpm db:up && pnpm --filter @appamora/db exec prisma migrate deploy"
+  else
+    echo "AppAmora: Docker isn't running; start it, then run: pnpm db:up && pnpm --filter @appamora/db exec prisma migrate deploy"
+  fi
+fi
+exit 0
