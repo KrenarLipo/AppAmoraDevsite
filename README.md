@@ -13,6 +13,28 @@ packages/
 
 Managed with **pnpm** workspaces and **Turborepo**. Future products (builder dashboard, SEO tools, creator tools) go in `apps/` and share `packages/`.
 
+## Set up on a new computer (Ubuntu/Debian)
+
+```bash
+sudo apt install -y git gh          # if they're not installed yet
+gh auth login                       # log in to GitHub (choose HTTPS, then log in with the browser)
+gh repo clone KrenarLipo/AppAmoraDevsite
+cd AppAmoraDevsite
+./setup.sh
+```
+
+`setup.sh` checks and installs what's missing (Node.js via nvm, pnpm, Docker), installs the packages, creates the local settings files with a new secret, starts the local database and creates its tables. It can also copy your data from the online database and add an **AppAmora (dev)** icon to the apps menu. It's safe to run again.
+
+Day to day, on any computer:
+
+```bash
+git pull                 # new packages and database changes are applied automatically (.githooks/post-merge)
+./scripts/start.sh       # or the AppAmora icon: starts the database and the site, opens the browser
+pnpm db:pull-online      # optional: replace local data with a fresh copy of the online database
+```
+
+Settings files (`apps/web/.env.local`, `packages/db/.env*`) are never in git. Each computer gets its own; copy keys you need (Google, PayPal) by hand.
+
 ## Getting started
 
 Requirements: Node.js 22+, pnpm (`corepack enable pnpm`), Docker and the PostgreSQL client tools (`psql`, `pg_dump`).
