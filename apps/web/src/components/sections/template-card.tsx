@@ -1,4 +1,6 @@
+import Image from "next/image";
 import type { templates } from "@/lib/catalog";
+import { nicheDefaults } from "@/lib/sites/niche-defaults";
 
 type Props = {
   template: (typeof templates)[number];
@@ -7,24 +9,26 @@ type Props = {
   defaultBadge: string;
 };
 
-/** A template with a small abstract thumbnail drawn in its own colors. */
+/** A template with its default photo and a hint of its colors. */
 export function TemplateCard({ template, name, description, defaultBadge }: Props) {
-  const { bg, hero, fg, accent } = template.colors;
+  const { bg, accent } = template.colors;
   return (
     <article className="flex flex-[1_1_340px] flex-col overflow-hidden rounded-2xl border border-panel-line bg-panel">
-      <div aria-hidden="true" className="relative flex h-[190px] flex-col gap-2.5 p-[18px]" style={{ background: bg }}>
-        <div className="flex items-center justify-between">
-          <span className="h-2 w-[54px] rounded" style={{ background: fg }} />
-          <span className="flex gap-1.5">
-            {[0, 1, 2].map((n) => (
-              <span key={n} className="h-1.5 w-[22px] rounded-sm opacity-50" style={{ background: fg }} />
-            ))}
+      <div aria-hidden="true" className="group relative h-[200px] overflow-hidden" style={{ background: bg }}>
+        <Image
+          src={nicheDefaults[template.id].images[0]!.src}
+          alt=""
+          fill
+          sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+        <div className="absolute inset-x-[18px] bottom-[18px] flex items-end justify-between gap-3">
+          <span className="flex flex-col gap-1.5">
+            <span className="h-2.5 w-28 rounded bg-white" />
+            <span className="h-2 w-16 rounded bg-white/60" />
           </span>
-        </div>
-        <div className="flex flex-1 flex-col justify-center gap-2 rounded-[10px] p-4" style={{ background: hero }}>
-          <span className="h-3 w-3/5 rounded" style={{ background: fg }} />
-          <span className="h-2 w-2/5 rounded opacity-55" style={{ background: fg }} />
-          <span className="mt-1 h-[18px] w-[70px] rounded-[5px]" style={{ background: accent }} />
+          <span className="h-[22px] w-[74px] rounded-[5px]" style={{ background: accent }} />
         </div>
       </div>
       <div className="flex flex-1 items-start justify-between gap-3 px-5 pt-[18px] pb-5">

@@ -111,6 +111,9 @@ const homeSchema = z.object({
   hero: siteContentSchema.shape.hero,
   slideshow: siteContentSchema.shape.slideshow,
   subscribe: siteContentSchema.shape.subscribe,
+  highlights: siteContentSchema.shape.highlights,
+  introImage: siteContentSchema.shape.introImage,
+  cta: siteContentSchema.shape.cta,
 });
 
 export async function saveHome(input: unknown): Promise<Result> {
@@ -124,11 +127,15 @@ export async function saveHome(input: unknown): Promise<Result> {
     hero: parsed.data.hero,
     slideshow: ctx.limits.slideshow ? parsed.data.slideshow : current.slideshow,
     subscribe: { ...parsed.data.subscribe, enabled: ctx.limits.subscribers && parsed.data.subscribe.enabled },
+    highlights: parsed.data.highlights,
+    introImage: ctx.limits.slideshow ? parsed.data.introImage : current.introImage,
+    cta: parsed.data.cta,
   };
   const result = await writeContent(ctx, next);
   if (result.ok) {
     const kept = new Set(next.slideshow.map((s) => s.id));
     for (const old of current.slideshow) if (!kept.has(old.id)) await deleteImage(old.id);
+    if (current.introImage && current.introImage.id !== next.introImage?.id) await deleteImage(current.introImage.id);
   }
   return result;
 }

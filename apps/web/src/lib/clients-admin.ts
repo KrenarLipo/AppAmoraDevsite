@@ -67,7 +67,7 @@ export async function createClientAccount(input: NewClient): Promise<{ clientId:
             template: input.template,
             content: defaultSiteContent(input.businessName, input.template, input.language) as unknown as Prisma.InputJsonValue,
             pages: {
-              create: defaultPages().map((p) => ({ ...p, translations: p.translations as unknown as Prisma.InputJsonValue })),
+              create: defaultPages(input.template).map((p) => ({ ...p, translations: p.translations as unknown as Prisma.InputJsonValue })),
             },
           },
         },

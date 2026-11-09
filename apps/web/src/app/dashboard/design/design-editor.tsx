@@ -4,6 +4,7 @@ import Image from "next/image";
 import type { TemplateId } from "@/lib/catalog";
 import { mediaUrl, type ImageRef } from "@/lib/settings/schema";
 import { fontFamilies } from "@/lib/sites/fonts-client";
+import { nicheDefaults } from "@/lib/sites/niche-defaults";
 import { fontIds, fontNames, templateOrder, themes, type FontId } from "@/lib/sites/templates";
 import { saveDesign } from "../actions";
 import { Card, Field, ImageUpload, SaveBar, UpgradeNote, buttonClass, inputClass, useEditor } from "../ui";
@@ -197,41 +198,26 @@ function ColorField({
   );
 }
 
-/** A small drawing of the template, in its own colors. */
+/** A preview of the template: its first photo with its colors, fonts and button. */
 function TemplateThumb({ id }: { id: TemplateId }) {
   const t = themes[id];
   const c = t.colors;
+  const photo = nicheDefaults[id].images[0]!;
   return (
-    <span className="flex aspect-[16/10] flex-col gap-2 overflow-hidden p-3" style={{ background: c.background, borderRadius: Math.min(t.radius, 12) }}>
-      <span className="flex items-center justify-between">
-        <span className="h-2 w-10 rounded-full" style={{ background: c.text, opacity: 0.8 }} />
-        <span className="flex gap-1">
-          {[0, 1, 2].map((i) => (
-            <span key={i} className="h-1.5 w-5 rounded-full" style={{ background: c.muted }} />
-          ))}
+    <span className="relative flex aspect-[16/10] overflow-hidden" style={{ background: c.background, borderRadius: Math.min(t.radius, 12) }}>
+      <Image src={photo.src} alt="" fill sizes="(min-width: 1024px) 300px, 50vw" className="object-cover" />
+      <span className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+      <span className="absolute inset-x-3 bottom-3 flex flex-col items-start gap-2">
+        <span
+          className="text-lg leading-tight font-bold text-white"
+          style={{ fontFamily: fontFamilies[t.fonts.heading], textTransform: t.uppercaseHeadings ? "uppercase" : "none" }}
+        >
+          {t.name}
+        </span>
+        <span className="px-2.5 py-1 text-[11px] font-semibold" style={{ background: c.primary, color: c.onPrimary, borderRadius: Math.min(t.radius, 8) }}>
+          Contact us
         </span>
       </span>
-      {t.hero === "overlay" ? (
-        <span className="flex flex-1 flex-col justify-end gap-1 rounded p-2" style={{ background: c.surface }}>
-          <span className="h-2.5 w-3/4 rounded-full" style={{ background: c.text }} />
-          <span className="h-3 w-12 rounded" style={{ background: c.primary }} />
-        </span>
-      ) : t.hero === "centered" ? (
-        <span className="flex flex-1 flex-col items-center gap-1.5 pt-1">
-          <span className="h-2.5 w-2/3 rounded-full" style={{ background: c.text }} />
-          <span className="h-3 w-12 rounded" style={{ background: c.primary }} />
-          <span className="w-full flex-1 rounded" style={{ background: c.surface }} />
-        </span>
-      ) : (
-        <span className="flex flex-1 gap-2">
-          <span className="flex flex-1 flex-col justify-center gap-1.5">
-            <span className="h-2.5 w-full rounded-full" style={{ background: c.text }} />
-            <span className="h-2 w-2/3 rounded-full" style={{ background: c.muted }} />
-            <span className="h-3 w-12 rounded" style={{ background: c.primary }} />
-          </span>
-          <span className="flex-1 rounded" style={{ background: c.surface }} />
-        </span>
-      )}
     </span>
   );
 }

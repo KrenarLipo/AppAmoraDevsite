@@ -2,7 +2,7 @@ import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
 import { FacebookIcon, InstagramIcon, TikTokIcon } from "@/components/icons";
 import { mediaUrl } from "@/lib/settings/schema";
-import { pick } from "@/lib/sites/content";
+import { CONTACT_SLUG, pick } from "@/lib/sites/content";
 import { fontFamilies } from "@/lib/sites/fonts";
 import { siteLanguageNames, type SiteLanguage } from "@/lib/sites/languages";
 import { siteHref, type PublicSite } from "@/lib/sites/public";
@@ -51,6 +51,9 @@ export function SiteFrame({ site, language, currentPage, children }: Props) {
     .filter((p) => p.showInMenu)
     .map((p) => ({ href: siteHref(site, language, p.slug), label: pick(objTitles(p.translations), language, fallback), active: p.slug === currentPage }));
   const languages = site.languages.map((l) => ({ code: l, name: siteLanguageNames[l], href: siteHref(site, l, currentPage), active: l === language }));
+  const ctaLabel = pick(content.hero.button, language, fallback);
+  const cta = ctaLabel && site.pages.some((p) => p.slug === CONTACT_SLUG) ? { label: ctaLabel, href: siteHref(site, language, CONTACT_SLUG) } : null;
+  const tagline = pick(content.hero.text, language, fallback);
   const whatsapp = site.limits.whatsapp && content.contact.whatsapp ? content.contact.whatsapp.replace(/\D/g, "") : null;
   const social = [
     { href: content.social.instagram, label: "Instagram", Icon: InstagramIcon },
@@ -81,54 +84,64 @@ export function SiteFrame({ site, language, currentPage, children }: Props) {
               </span>
             )}
           </a>
-          <SiteMenu items={menu} languages={languages} labels={{ menu: t.menu, close: t.close }} />
+          <SiteMenu items={menu} languages={languages} labels={{ menu: t.menu, close: t.close }} cta={cta} />
         </div>
       </header>
 
       <main className="flex-1">{children}</main>
 
       <footer className="bg-(--site-surface)">
-        <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-10 sm:px-6">
-          <div className="flex flex-wrap items-start justify-between gap-6">
-            <div className="flex flex-col gap-1.5 text-sm text-(--site-muted)">
-              <span className="text-lg font-bold text-(--site-text)" style={{ fontFamily: "var(--site-heading-font)" }}>
+        <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 pt-14 pb-8 sm:px-6">
+          <div className="grid gap-10 sm:grid-cols-[1.4fr_1fr_1fr]">
+            <div className="flex flex-col gap-4">
+              <span className="text-2xl font-bold" style={{ fontFamily: "var(--site-heading-font)" }}>
                 {content.brandName}
               </span>
+              {tagline && <p className="max-w-sm text-sm leading-relaxed text-(--site-muted)">{tagline}</p>}
+              {social.length > 0 && (
+                <div className="flex gap-2">
+                  {social.map(({ href, label, Icon }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={label}
+                      className="flex size-11 items-center justify-center rounded-(--site-radius) border border-(--site-text)/15 transition-all duration-300 hover:-translate-y-0.5 hover:border-(--site-primary) hover:text-(--site-primary)"
+                    >
+                      <Icon />
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+            <nav className="flex flex-col gap-2.5 text-sm">
+              {menu.map((item) => (
+                <a key={item.href} href={item.href} className="text-(--site-muted) transition-colors hover:text-(--site-text)">
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+            <div className="flex flex-col gap-2.5 text-sm text-(--site-muted)">
               {content.contact.address && <span>{content.contact.address}</span>}
               {content.contact.phone && (
-                <a href={`tel:${content.contact.phone.replace(/[^+\d]/g, "")}`} className="hover:text-(--site-text)">
+                <a href={`tel:${content.contact.phone.replace(/[^+\d]/g, "")}`} className="transition-colors hover:text-(--site-text)">
                   {content.contact.phone}
                 </a>
               )}
               {content.contact.email && (
-                <a href={`mailto:${content.contact.email}`} className="hover:text-(--site-text)">
+                <a href={`mailto:${content.contact.email}`} className="break-all transition-colors hover:text-(--site-text)">
                   {content.contact.email}
                 </a>
               )}
             </div>
-            {social.length > 0 && (
-              <div className="flex gap-2">
-                {social.map(({ href, label, Icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className="flex size-11 items-center justify-center rounded-(--site-radius) border border-(--site-text)/15 hover:border-(--site-text)"
-                  >
-                    <Icon />
-                  </a>
-                ))}
-              </div>
-            )}
           </div>
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-(--site-text)/10 pt-5 text-xs text-(--site-muted)">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-(--site-text)/10 pt-6 text-xs text-(--site-muted)">
             <span>
               © {site.year} {content.brandName}
             </span>
             {site.limits.badge && (
-              <a href="https://appamora.com" target="_blank" rel="noopener" className="font-semibold hover:text-(--site-text)">
+              <a href="https://appamora.com" target="_blank" rel="noopener" className="font-semibold transition-colors hover:text-(--site-text)">
                 {t.madeWith}
               </a>
             )}

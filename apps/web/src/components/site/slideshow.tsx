@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 type Slide = { src: string; width: number; height: number };
 
-/** Cross-fading images that change every 5 seconds, with dots to pick one. */
+/** Cross-fading photos that change every 6 seconds and slowly zoom out, with dots to pick one. */
 export function Slideshow({ images, cover = false }: { images: Slide[]; cover?: boolean }) {
   const [index, setIndex] = useState(0);
 
@@ -13,7 +13,7 @@ export function Slideshow({ images, cover = false }: { images: Slide[]; cover?: 
     if (images.length < 2) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) return;
-    const timer = setInterval(() => setIndex((i) => (i + 1) % images.length), 5000);
+    const timer = setInterval(() => setIndex((i) => (i + 1) % images.length), 6000);
     return () => clearInterval(timer);
   }, [images.length]);
 
@@ -27,7 +27,7 @@ export function Slideshow({ images, cover = false }: { images: Slide[]; cover?: 
           fill
           priority={i === 0}
           sizes={cover ? "100vw" : "(min-width: 1024px) 560px, 100vw"}
-          className={`object-cover transition-opacity duration-1000 ${i === index ? "opacity-100" : "opacity-0"}`}
+          className={`object-cover transition-opacity duration-1000 ${i === index ? "site-zoom opacity-100" : "opacity-0"}`}
         />
       ))}
       {images.length > 1 && (

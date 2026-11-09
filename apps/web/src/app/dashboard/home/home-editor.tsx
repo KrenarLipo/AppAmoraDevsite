@@ -5,10 +5,16 @@ import { useState } from "react";
 import { mediaUrl } from "@/lib/settings/schema";
 import type { SiteContent } from "@/lib/sites/content";
 import type { SiteLanguage } from "@/lib/sites/languages";
+import { iconIds, type IconId } from "@/lib/sites/niche-defaults";
 import { saveHome } from "../actions";
 import { Card, Field, ImageUpload, LanguageTabs, SaveBar, UpgradeNote, buttonClass, inputClass, useEditor } from "../ui";
 
-type Home = Pick<SiteContent, "hero" | "slideshow" | "subscribe">;
+type Home = Pick<SiteContent, "hero" | "slideshow" | "subscribe" | "highlights" | "introImage" | "cta">;
+
+const iconLabels: Record<IconId, string> = {
+  sparkle: "Sparkle", heart: "Heart", clock: "Clock", leaf: "Leaf", shield: "Shield", star: "Star",
+  users: "People", chart: "Growth", cup: "Coffee", dumbbell: "Fitness", map: "Location", check: "Check",
+};
 
 export function HomeEditor({
   initial,
@@ -17,7 +23,9 @@ export function HomeEditor({
   slideshowAllowed,
   subscribersAllowed,
   locked,
+  templatePhotos,
 }: {
+  templatePhotos: string[];
   initial: Home;
   languages: SiteLanguage[];
   defaultLanguage: SiteLanguage;
@@ -50,8 +58,20 @@ export function HomeEditor({
       </Card>
 
       <Card title="Slideshow" description="Up to 6 photos that change every few seconds. Landscape photos work best.">
+        {home.slideshow.length === 0 && (
+          <div className="flex flex-col gap-2">
+            <p className="text-sm text-muted">Your site shows the template&apos;s photos until you add your own:</p>
+            <div className="flex gap-2">
+              {templatePhotos.slice(0, 2).map((src) => (
+                <div key={src} className="relative aspect-[4/3] w-32 overflow-hidden rounded-lg bg-sand">
+                  <Image src={src} alt="" fill sizes="128px" className="object-cover" />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
         {!slideshowAllowed ? (
-          <UpgradeNote>The slideshow is part of the Starter and Pro plans.</UpgradeNote>
+          <UpgradeNote>Using your own photos is part of the Starter and Pro plans.</UpgradeNote>
         ) : (
           <>
             {home.slideshow.length > 0 && (
@@ -104,6 +124,100 @@ export function HomeEditor({
             )}
           </>
         )}
+      </Card>
+
+      <Card title="Highlights" description="Three short reasons to choose you, shown under the welcome section.">
+        <label className="flex items-center gap-3 font-medium">
+          <input
+            type="checkbox"
+            checked={home.highlights.enabled}
+            onChange={(e) => editor.setValue((h) => ({ ...h, highlights: { ...h.highlights, enabled: e.target.checked } }))}
+            className="size-5 accent-amora"
+          />
+          Show the highlights
+        </label>
+        <div className="grid gap-4 lg:grid-cols-3">
+          {home.highlights.items.map((item, index) => {
+            const setItem = (patch: Partial<typeof item>) =>
+              editor.setValue((h) => ({
+                ...h,
+                highlights: { ...h.highlights, items: h.highlights.items.map((it, i) => (i === index ? { ...it, ...patch } : it)) },
+              }));
+            return (
+              <div key={index} className="flex flex-col gap-3 rounded-xl border border-line p-4">
+                <Field label="Icon">
+                  <select value={item.icon} onChange={(e) => setItem({ icon: e.target.value as IconId })} className={inputClass}>
+                    {iconIds.map((icon) => (
+                      <option key={icon} value={icon}>
+                        {iconLabels[icon]}
+                      </option>
+                    ))}
+                  </select>
+                </Field>
+                <Field label={`Title (${language.toUpperCase()})`}>
+                  <input
+                    value={item.title[language]}
+                    maxLength={80}
+                    placeholder={language === defaultLanguage ? "" : item.title[defaultLanguage]}
+                    onChange={(e) => setItem({ title: { ...item.title, [language]: e.target.value } })}
+                    className={inputClass}
+                  />
+                </Field>
+                <Field label={`Text (${language.toUpperCase()})`}>
+                  <textarea
+                    value={item.text[language]}
+                    maxLength={240}
+                    rows={3}
+                    placeholder={language === defaultLanguage ? "" : item.text[defaultLanguage]}
+                    onChange={(e) => setItem({ text: { ...item.text, [language]: e.target.value } })}
+                    className={`${inputClass} h-auto py-2.5`}
+                  />
+                </Field>
+              </div>
+            );
+          })}
+        </div>
+      </Card>
+
+      <Card title="Intro photo" description="Shown next to your home page text (edit the text in Pages → Home).">
+        <div className="flex flex-wrap items-center gap-4">
+          <div className="relative aspect-[4/3] w-48 overflow-hidden rounded-xl bg-sand">
+            <Image src={home.introImage ? mediaUrl(home.introImage) : templatePhotos[2]!} alt="" fill sizes="192px" className="object-cover" />
+          </div>
+          {slideshowAllowed ? (
+            <div className="flex flex-wrap gap-2">
+              <ImageUpload kind="slide" label={home.introImage ? "Replace photo" : "Use my own photo"} onUploaded={(image) => editor.setValue((h) => ({ ...h, introImage: image }))} />
+              {home.introImage && (
+                <button type="button" onClick={() => editor.setValue((h) => ({ ...h, introImage: null }))} className={`${buttonClass} border border-line-strong`}>
+                  Use template photo
+                </button>
+              )}
+            </div>
+          ) : (
+            <UpgradeNote>Using your own photos is part of the Starter and Pro plans.</UpgradeNote>
+          )}
+        </div>
+      </Card>
+
+      <Card title="Closing banner" description="A colored band near the bottom of your pages, with your contact button.">
+        <label className="flex items-center gap-3 font-medium">
+          <input
+            type="checkbox"
+            checked={home.cta.enabled}
+            onChange={(e) => editor.setValue((h) => ({ ...h, cta: { ...h.cta, enabled: e.target.checked } }))}
+            className="size-5 accent-amora"
+          />
+          Show the closing banner
+        </label>
+        <Field label={`Title (${language.toUpperCase()})`}>
+          <input
+            value={home.cta.title[language]}
+            maxLength={140}
+            placeholder={language === defaultLanguage ? "" : home.cta.title[defaultLanguage]}
+            onChange={(e) => editor.setValue((h) => ({ ...h, cta: { ...h.cta, title: { ...h.cta.title, [language]: e.target.value } } }))}
+            className={inputClass}
+          />
+        </Field>
       </Card>
 
       <Card title="Subscriber box" description="A sign-up box at the bottom of your home page. New subscribers appear under Subscribers.">

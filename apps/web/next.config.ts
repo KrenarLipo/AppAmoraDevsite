@@ -7,7 +7,10 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["sharp"],
   images: {
     // Only uploaded media is optimized by next/image.
-    localPatterns: [{ pathname: "/media/**", search: "" }],
+    localPatterns: [
+      { pathname: "/media/**", search: "" },
+      { pathname: "/templates/**", search: "" },
+    ],
   },
   experimental: {
     serverActions: {

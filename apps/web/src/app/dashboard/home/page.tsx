@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { requireClient } from "@/lib/client";
+import { nicheDefaults } from "@/lib/sites/niche-defaults";
 import { HomeEditor } from "./home-editor";
 
 export const metadata: Metadata = { title: "Home page" };
@@ -14,7 +15,8 @@ export default async function HomePageEditor() {
         <p className="text-muted">The first thing visitors see. The rest of the home page text is under Pages → Home.</p>
       </div>
       <HomeEditor
-        initial={{ hero: content.hero, slideshow: content.slideshow, subscribe: content.subscribe }}
+        initial={{ hero: content.hero, slideshow: content.slideshow, subscribe: content.subscribe, highlights: content.highlights, introImage: content.introImage, cta: content.cta }}
+        templatePhotos={nicheDefaults[ctx.site.template].images.map((i) => i.src)}
         languages={content.languages.slice(0, ctx.limits.languages)}
         defaultLanguage={content.defaultLanguage}
         slideshowAllowed={ctx.limits.slideshow}
