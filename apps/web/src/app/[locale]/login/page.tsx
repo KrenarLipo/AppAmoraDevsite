@@ -17,8 +17,8 @@ export default async function LoginPage() {
   const t = await getDictionary(locale);
   const formProps = {
     labels: t.auth,
-    // Admins land in the admin area; client dashboards join in phase 2.
-    callbackURL: "/admin",
+    // Clients land in their dashboard; the dashboard sends admins on to /admin.
+    callbackURL: "/dashboard",
     loginPath: localePath(locale, "/login"),
     googleEnabled,
     recaptchaSiteKey: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,

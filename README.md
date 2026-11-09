@@ -79,6 +79,16 @@ pnpm admin:create you@example.com   # create an admin, or reset its password (as
 - Public sign-up is off. Google can only log in to an account that already exists with the same email.
 - Login is limited to 5 attempts per minute. Every admin page and action checks the session and the `ADMIN` role on the server (`src/lib/admin.ts`).
 
+## Website builder (clients)
+
+Businesses get a dashboard at **/dashboard** to build their own site, shown at **appamora.com/s/&lt;name&gt;** (subdomains come later). Clients' sites are kept out of search results until then.
+
+- **Admin → Clients**: create a client (business, login, plan, template, language). The password is shown once to send to them. Edit the plan, the trial end and the "paid until" date, record cash payments, confirm pending ones, add logins, and use **View as client** to open their dashboard exactly as they see it.
+- **Plans** (`src/lib/plans.ts`): the free trial gets 3 templates, 3 pages and 1 language. Starter adds all 6 templates, colors and fonts, the slideshow, 6 pages, 2 languages, subscribers and the WhatsApp button. Pro: unlimited pages, 5 languages, no badge, 3 logins. An account is **paid** while "paid until" is today or later. When the trial ends unpaid, the site goes offline and the client can only change the name and logo.
+- **Dashboard**: design (template, logo, colors, fonts), home page (headline, slideshow, subscriber box), pages (markdown, per language), contact details and languages, messages from the site's contact form, subscribers (CSV download), plan and billing.
+- **Templates** (`src/lib/sites/templates.ts`): 6 themes over the same building blocks, rendered by `src/app/s/[slug]/[[...path]]`.
+- **Payments**: clients pay 1, 3 or 12 months with **PayPal or card** (`src/lib/paypal.ts`, Orders API; the server sets the amount and checks it after capture), or ask for **cash on delivery**, which you confirm in the admin. Without PayPal keys, only cash is offered.
+
 ## Blog
 
 Posts are written at **/admin/blog** and stored in the database (`BlogPost` + one `BlogPostTranslation` per language).

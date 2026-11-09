@@ -158,10 +158,10 @@ const en = {
         features: [
           "{trialDays}-day free trial",
           "All 6 templates",
-          "yourname.appamora.com",
-          "2 languages",
-          "Subscriber form",
-          "Colors & fonts",
+          "Up to 6 pages, 2 languages",
+          "Colors, fonts & photo slideshow",
+          "Subscriber form & list",
+          "WhatsApp chat button",
         ],
       },
       pro: {
@@ -170,10 +170,11 @@ const en = {
         cta: "Go Pro",
         features: [
           "Everything in Starter",
-          "All 5 languages",
-          "Your own domain",
-          "Instagram & TikTok feeds (soon)",
+          "Unlimited pages, all 5 languages",
           "No AppAmora badge",
+          "3 team logins",
+          "Priority support + 1 hour of changes a month",
+          "Your own domain (soon)",
         ],
       },
       custom: {

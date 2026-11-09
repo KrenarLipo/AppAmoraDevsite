@@ -11,6 +11,7 @@
         "BETTER_AUTH_*",
         "GOOGLE_*",
         "RECAPTCHA_SECRET_KEY",
+        "PAYPAL_*",
         "NEXT_PUBLIC_*",
         "VERCEL_ENV",
         "VERCEL_PROJECT_PRODUCTION_URL"

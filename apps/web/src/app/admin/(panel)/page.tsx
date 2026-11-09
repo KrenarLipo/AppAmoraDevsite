@@ -9,14 +9,18 @@ export const metadata: Metadata = { title: "Overview" };
 export default async function AdminHome() {
   const admin = await requireAdmin();
   const db = getDb();
-  const [newCount, total, waitlist, latest] = await Promise.all([
+  const [newCount, total, waitlist, latest, clients, pendingPayments] = await Promise.all([
     db.contactMessage.count({ where: { status: "NEW" } }),
     db.contactMessage.count(),
     db.contactMessage.count({ where: { interest: "WEBSITE_BUILDER" } }),
     db.contactMessage.findMany({ orderBy: { createdAt: "desc" }, take: 5 }),
+    db.client.count(),
+    db.payment.count({ where: { status: "PENDING" } }),
   ]);
 
   const stats = [
+    { label: "Clients", value: clients, href: "/admin/clients" },
+    { label: "Payments to confirm", value: pendingPayments, href: "/admin/clients" },
     { label: "New messages", value: newCount, href: "/admin/messages?status=NEW" },
     { label: "All messages", value: total, href: "/admin/messages?status=all" },
     { label: "Builder waitlist", value: waitlist, href: "/admin/messages?status=all&interest=WEBSITE_BUILDER" },

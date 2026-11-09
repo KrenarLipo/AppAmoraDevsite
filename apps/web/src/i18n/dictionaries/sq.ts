@@ -160,10 +160,10 @@ const sq: Dictionary = {
         features: [
           "Provë falas {trialDays}-ditore",
           "Të 6 shabllonet",
-          "emrijot.appamora.com",
-          "2 gjuhë",
-          "Formular abonimi",
-          "Ngjyra dhe fonte",
+          "Deri në 6 faqe, 2 gjuhë",
+          "Ngjyra, fonte dhe slideshow fotosh",
+          "Formular dhe listë abonentësh",
+          "Butoni i bisedës në WhatsApp",
         ],
       },
       pro: {
@@ -172,10 +172,11 @@ const sq: Dictionary = {
         cta: "Kalo në Pro",
         features: [
           "Gjithçka nga Starter",
-          "Të 5 gjuhët",
-          "Domeni yt",
-          "Feed Instagram dhe TikTok (së shpejti)",
+          "Faqe pa limit, të 5 gjuhët",
           "Pa shenjën AppAmora",
+          "3 hyrje për ekipin",
+          "Mbështetje me përparësi + 1 orë ndryshime në muaj",
+          "Domeni yt (së shpejti)",
         ],
       },
       custom: {
