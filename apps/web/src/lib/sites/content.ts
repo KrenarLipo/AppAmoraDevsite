@@ -2,6 +2,7 @@ import { z } from "zod";
 import type { TemplateId } from "@/lib/catalog";
 import { imageRefSchema } from "@/lib/settings/schema";
 import { siteLanguages, type SiteLanguage } from "./languages";
+import { iconIds, nicheDefaults, type IconId } from "./niche-defaults";
 import { fontIds, heroDefaults, type FontId } from "./templates";
 
 // The editable content of a client's site, stored as JSON on Site.content.
@@ -43,11 +44,25 @@ export const siteContentSchema = z.object({
   languages: z.array(z.enum(siteLanguages)).min(1, "Choose at least one language"),
   defaultLanguage: z.enum(siteLanguages),
   subscribe: z.object({ enabled: z.boolean(), title: texts(120) }),
+  /** Three short "why choose us" cards on the home page. */
+  highlights: z.object({
+    enabled: z.boolean(),
+    items: z
+      .array(z.object({ icon: z.enum(iconIds as [IconId, ...IconId[]]), title: texts(80), text: texts(240) }))
+      .max(3),
+  }),
+  /** The photo next to the home page text; null = the template's photo. */
+  introImage: imageRefSchema,
+  /** The closing band before the footer, with a button to the contact page. */
+  cta: z.object({ enabled: z.boolean(), title: texts(140) }),
 });
 export type SiteContent = z.infer<typeof siteContentSchema>;
 
+const fromCopy = (copy: { en: string; it: string; sq: string }): Texts => ({ ...emptyTexts(), ...copy });
+
 export function defaultSiteContent(brandName: string, template: TemplateId, language: SiteLanguage = "en"): SiteContent {
   const hero = heroDefaults[template];
+  const niche = nicheDefaults[template];
   const fill = (index: 0 | 1): Texts => ({ ...emptyTexts(), en: hero.en[index], it: hero.it[index], sq: hero.sq[index] });
   return {
     brandName,
@@ -64,6 +79,12 @@ export function defaultSiteContent(brandName: string, template: TemplateId, lang
       enabled: false,
       title: { ...emptyTexts(), en: "Get our news and offers", it: "Ricevi novità e offerte", sq: "Merr lajmet dhe ofertat tona" },
     },
+    highlights: {
+      enabled: true,
+      items: niche.highlights.map((h) => ({ icon: h.icon, title: fromCopy(h.title), text: fromCopy(h.text) })),
+    },
+    introImage: null,
+    cta: { enabled: true, title: fromCopy(niche.cta) },
   };
 }
 
@@ -103,7 +124,9 @@ export const HOME_SLUG = "";
 export const CONTACT_SLUG = "contact";
 export const PAGE_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
-export function defaultPages(): { slug: string; position: number; translations: PageTexts }[] {
+export function defaultPages(template: TemplateId): { slug: string; position: number; translations: PageTexts }[] {
+  const intro = nicheDefaults[template].intro;
+  const homeBody = (l: "en" | "it" | "sq") => `## ${intro.title[l]}\n\n${intro.body[l]}`;
   const page = (en: [string, string], it: [string, string], sq: [string, string]): PageTexts => ({
     ...emptyPageTexts(),
     en: { title: en[0], body: en[1] },
@@ -114,11 +137,7 @@ export function defaultPages(): { slug: string; position: number; translations: 
     {
       slug: HOME_SLUG,
       position: 0,
-      translations: page(
-        ["Home", "## Welcome\n\nTell visitors in a few sentences who you are and what you offer."],
-        ["Home", "## Benvenuti\n\nRacconta in poche frasi chi sei e cosa offri."],
-        ["Kryefaqja", "## Mirë se vini\n\nTregoju vizitorëve me pak fjali kush jeni dhe çfarë ofroni."],
-      ),
+      translations: page(["Home", homeBody("en")], ["Home", homeBody("it")], ["Kryefaqja", homeBody("sq")]),
     },
     {
       slug: "about",

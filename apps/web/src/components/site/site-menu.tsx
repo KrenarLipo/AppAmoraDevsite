@@ -5,7 +5,17 @@ import { useState } from "react";
 type Item = { href: string; label: string; active: boolean };
 type Language = { code: string; name: string; href: string; active: boolean };
 
-export function SiteMenu({ items, languages, labels }: { items: Item[]; languages: Language[]; labels: { menu: string; close: string } }) {
+export function SiteMenu({
+  items,
+  languages,
+  labels,
+  cta,
+}: {
+  items: Item[];
+  languages: Language[];
+  labels: { menu: string; close: string };
+  cta: { label: string; href: string } | null;
+}) {
   const [open, setOpen] = useState(false);
   const languageLinks = languages.length > 1 && (
     <div className="flex gap-1 text-sm">
@@ -33,12 +43,20 @@ export function SiteMenu({ items, languages, labels }: { items: Item[]; language
             key={item.href}
             href={item.href}
             aria-current={item.active ? "page" : undefined}
-            className={`font-medium transition-colors ${item.active ? "text-(--site-primary)" : "hover:text-(--site-primary)"}`}
+            className={`relative py-1 font-medium transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:origin-left after:bg-(--site-primary) after:transition-transform after:duration-300 ${item.active ? "text-(--site-primary) after:scale-x-100" : "after:scale-x-0 hover:text-(--site-primary) hover:after:scale-x-100"}`}
           >
             {item.label}
           </a>
         ))}
         {languageLinks}
+        {cta && (
+          <a
+            href={cta.href}
+            className="flex h-11 items-center rounded-(--site-radius) bg-(--site-primary) px-5 font-semibold text-(--site-on-primary) transition-all duration-300 hover:-translate-y-0.5 hover:opacity-90"
+          >
+            {cta.label}
+          </a>
+        )}
       </nav>
 
       <button
@@ -65,6 +83,14 @@ export function SiteMenu({ items, languages, labels }: { items: Item[]; language
               </a>
             ))}
             {languageLinks && <div className="pt-3">{languageLinks}</div>}
+            {cta && (
+              <a
+                href={cta.href}
+                className="mt-4 flex h-12 items-center justify-center rounded-(--site-radius) bg-(--site-primary) font-semibold text-(--site-on-primary)"
+              >
+                {cta.label}
+              </a>
+            )}
           </nav>
         </div>
       )}

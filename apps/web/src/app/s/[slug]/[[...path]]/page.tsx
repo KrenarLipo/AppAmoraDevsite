@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { ContactSection, Hero, PageBody, SubscribeSection } from "@/components/site/site-sections";
+import { ContactSection, CtaBand, heroImages, Hero, Highlights, Intro, PageBody, PageHeader, SubscribeSection } from "@/components/site/site-sections";
 import { SiteFrame, themeStyle } from "@/components/site/site-frame";
 import { renderMarkdown } from "@/lib/markdown";
 import { mediaUrl } from "@/lib/settings/schema";
@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const page = resolved?.page;
   const title = page && page.slug !== HOME_SLUG ? `${pick(titles(page), language, fallback)} · ${site.content.brandName}` : site.content.brandName;
   const description = pick(site.content.hero.text, language, fallback);
-  const image = site.content.slideshow[0] ?? site.content.logo;
+  const own = site.content.slideshow[0] ?? site.content.logo;
   return {
     title,
     description,
@@ -50,7 +50,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
     alternates: {
       languages: Object.fromEntries(site.languages.map((l) => [l, siteHref(site, l, page?.slug ?? "")])),
     },
-    openGraph: { title, description, siteName: site.content.brandName, ...(image && { images: [mediaUrl(image)] }) },
+    openGraph: { title, description, siteName: site.content.brandName, images: [own ? mediaUrl(own) : heroImages(site)[0]!.src] },
   };
 }
 
@@ -109,13 +109,17 @@ async function SitePage({ params }: { params: Params }) {
       {page.slug === HOME_SLUG ? (
         <>
           <Hero site={site} language={language} />
-          {html && <PageBody html={html} />}
+          <Highlights site={site} language={language} />
+          <Intro site={site} html={html} />
+          <CtaBand site={site} language={language} />
           <SubscribeSection site={site} language={language} />
         </>
       ) : (
         <>
-          <PageBody html={html} title={pick(titles(page), language, fallback)} />
+          <PageHeader title={pick(titles(page), language, fallback)} />
+          <PageBody html={html} />
           {page.slug === CONTACT_SLUG && <ContactSection site={site} language={language} />}
+          {page.slug !== CONTACT_SLUG && <CtaBand site={site} language={language} />}
         </>
       )}
     </SiteFrame>
