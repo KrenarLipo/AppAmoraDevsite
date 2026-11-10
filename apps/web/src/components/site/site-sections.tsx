@@ -106,7 +106,7 @@ export function Hero({ site, language }: Props) {
       <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-12 px-4 pt-14 pb-20 sm:px-6 sm:pt-20 sm:pb-28">
         <div className="flex min-w-0 flex-[1_1_420px] flex-col items-start gap-6">{copy}</div>
         <div style={rise(300)} className="site-rise relative min-w-0 flex-[1_1_380px]">
-          <div aria-hidden className="absolute -inset-3 -z-0 translate-x-4 translate-y-4 rounded-(--site-radius) bg-(--site-primary) opacity-20" />
+          <div aria-hidden className="absolute -inset-3 -z-0 hidden translate-x-4 translate-y-4 rounded-(--site-radius) bg-(--site-primary) opacity-20 sm:block" />
           <div className="relative aspect-[4/5] overflow-hidden rounded-(--site-radius) shadow-[0_40px_80px_-40px_rgba(0,0,0,0.5)] sm:aspect-[4/4.4]">
             <Slideshow images={images} cover />
           </div>
