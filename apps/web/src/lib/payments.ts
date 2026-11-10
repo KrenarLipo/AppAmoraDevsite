@@ -1,6 +1,7 @@
 import { getDb, type Plan } from "@appamora/db";
 import { updateTag } from "next/cache";
-import { extendPaidUntil } from "./plans";
+import { recordPaymentActivity } from "./activity";
+import { extendPaidUntil, planNames } from "./plans";
 import { siteTag } from "./sites/public";
 
 /**
@@ -21,9 +22,17 @@ export async function completePayment(paymentId: string): Promise<{ ok: boolean;
     });
     if (claimed.count === 0) return null;
     await tx.client.update({ where: { id: payment.clientId }, data: { plan: payment.plan as Plan, paidUntil } });
-    return { slug: payment.client.slug, paidUntil };
+    return { slug: payment.client.slug, paidUntil, payment };
   });
   if (!result) return { ok: false };
   updateTag(siteTag(result.slug));
+  const { payment } = result;
+  await recordPaymentActivity(payment.clientId, "paid", {
+    amount: payment.amount,
+    plan: planNames[payment.plan],
+    months: payment.months,
+    method: payment.method === "PAYPAL" ? "PayPal" : "cash",
+    paidUntil: result.paidUntil,
+  });
   return { ok: true, paidUntil: result.paidUntil };
 }

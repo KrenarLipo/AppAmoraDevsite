@@ -20,6 +20,7 @@ export default async function ClientPage({ params }: PageProps<"/admin/clients/[
     include: {
       users: { select: { id: true, name: true, email: true, createdAt: true }, orderBy: { createdAt: "asc" } },
       payments: { orderBy: { createdAt: "desc" }, take: 50 },
+      activity: { orderBy: { createdAt: "desc" }, take: 30 },
       site: { select: { template: true, _count: { select: { messages: true, subscribers: true, pages: true } } } },
     },
   });
@@ -109,6 +110,23 @@ export default async function ClientPage({ params }: PageProps<"/admin/clients/[
           </ul>
         )}
         <RecordPaymentForm clientId={client.id} />
+      </section>
+
+      <section className="flex flex-col gap-3 rounded-2xl border border-line bg-white p-5">
+        <h2 className="font-display text-xl font-bold">Activity</h2>
+        {client.activity.length === 0 ? (
+          <p className="text-sm text-muted">No changes yet.</p>
+        ) : (
+          <ul className="flex flex-col divide-y divide-line">
+            {client.activity.map((a) => (
+              <li key={a.id} className="flex flex-wrap items-baseline gap-x-3 gap-y-1 py-2.5 text-[15px]">
+                <span className="w-32 shrink-0 text-sm text-muted">{formatDateTime(a.createdAt)}</span>
+                <span className="min-w-0 flex-1">{a.summary}</span>
+                {a.actor === "admin" && <span className="rounded bg-sand px-1.5 py-0.5 text-[11px] font-semibold">by you</span>}
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       <ClientEditForm

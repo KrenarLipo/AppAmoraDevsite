@@ -4,6 +4,7 @@ import { getDb, Prisma } from "@appamora/db";
 import { refresh, updateTag } from "next/cache";
 import { z } from "zod";
 import type { TemplateId } from "@/lib/catalog";
+import { recordActivity } from "@/lib/activity";
 import { requireClient, type ClientContext } from "@/lib/client";
 import { deleteImage, storeImage, type StoredImage } from "@/lib/media";
 import {
@@ -15,7 +16,7 @@ import {
   type SiteContent,
 } from "@/lib/sites/content";
 import { siteTag } from "@/lib/sites/public";
-import { templateOrder } from "@/lib/sites/templates";
+import { templateOrder, themes } from "@/lib/sites/templates";
 
 export type Result = { ok: true } | { ok: false; error: string };
 
@@ -102,6 +103,15 @@ export async function saveDesign(input: unknown): Promise<Result> {
     await getDb().site.update({ where: { id: ctx.site.id }, data: { template } });
   }
   if (current.logo && current.logo.id !== next.logo?.id) await deleteImage(current.logo.id);
+
+  const changes = [
+    template !== ctx.site.template && `Changed the template to ${themes[template].name}`,
+    next.brandName !== current.brandName && `Renamed the website to “${next.brandName}”`,
+    next.logo?.id !== current.logo?.id && (next.logo ? "Changed the logo" : "Removed the logo"),
+    JSON.stringify(next.colors) !== JSON.stringify(current.colors) && "Changed the colors",
+    JSON.stringify(next.fonts) !== JSON.stringify(current.fonts) && "Changed the fonts",
+  ].filter((c): c is string => Boolean(c));
+  for (const change of changes) await recordActivity(ctx, "design", change);
   return done(ctx);
 }
 
@@ -133,6 +143,7 @@ export async function saveHome(input: unknown): Promise<Result> {
   };
   const result = await writeContent(ctx, next);
   if (result.ok) {
+    await recordActivity(ctx, "home", "Edited the home page");
     const kept = new Set(next.slideshow.map((s) => s.id));
     for (const old of current.slideshow) if (!kept.has(old.id)) await deleteImage(old.id);
     if (current.introImage && current.introImage.id !== next.introImage?.id) await deleteImage(current.introImage.id);
@@ -162,7 +173,9 @@ export async function saveDetails(input: unknown): Promise<Result> {
     };
   }
   if (!languages.includes(defaultLanguage)) return { ok: false, error: "The main language must be one of the chosen languages." };
-  return writeContent(ctx, { ...ctx.site.content, ...parsed.data, languages: [...new Set(languages)] });
+  const result = await writeContent(ctx, { ...ctx.site.content, ...parsed.data, languages: [...new Set(languages)] });
+  if (result.ok) await recordActivity(ctx, "details", "Updated contact details and languages");
+  return result;
 }
 
 // ─── Pages ──────────────────────────────────────────────────────────────────
@@ -200,6 +213,7 @@ export async function savePage(input: unknown): Promise<{ ok: true; id: string }
         where: { id: existing.id },
         data: { slug, showInMenu: existing.slug === HOME_SLUG ? true : page.showInMenu, translations },
       });
+      await recordActivity(ctx, "pages", `Edited the page “${page.translations[main].title}”`);
       done(ctx);
       return { ok: true, id: existing.id };
     }
@@ -210,6 +224,7 @@ export async function savePage(input: unknown): Promise<{ ok: true; id: string }
     const created = await db.sitePage.create({
       data: { siteId: ctx.site.id, slug, showInMenu: page.showInMenu, position: count, translations },
     });
+    await recordActivity(ctx, "pages", `Added the page “${page.translations[main].title}”`);
     done(ctx);
     return { ok: true, id: created.id };
   } catch (error) {
@@ -228,6 +243,8 @@ export async function deletePage(id: string): Promise<Result> {
   if (!page) return { ok: true };
   if (page.slug === HOME_SLUG) return { ok: false, error: "The home page can't be deleted." };
   await db.sitePage.delete({ where: { id } });
+  const title = (page.translations as Record<string, { title?: string }>)[ctx.site.content.defaultLanguage]?.title ?? page.slug;
+  await recordActivity(ctx, "pages", `Deleted the page “${title}”`);
   return done(ctx);
 }
 
@@ -243,6 +260,7 @@ export async function movePage(id: string, direction: -1 | 1): Promise<Result> {
   const order = [...pages];
   [order[index], order[target]] = [order[target]!, order[index]!];
   await db.$transaction(order.map((p, position) => db.sitePage.update({ where: { id: p.id }, data: { position } })));
+  await recordActivity(ctx, "pages", "Reordered the menu");
   return done(ctx);
 }
 

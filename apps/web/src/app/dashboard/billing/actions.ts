@@ -4,6 +4,7 @@ import { getDb, type Plan } from "@appamora/db";
 import { refresh } from "next/cache";
 import { z } from "zod";
 import { requireClient } from "@/lib/client";
+import { recordPaymentActivity } from "@/lib/activity";
 import { completePayment } from "@/lib/payments";
 import { captureOrder, createOrder, paypalEnabled } from "@/lib/paypal";
 import { payablePlans, paymentPeriods, planNames } from "@/lib/plans";
@@ -89,6 +90,12 @@ export async function requestCashPayment(input: unknown): Promise<{ ok: true } |
   const amount = await priceFor(parsed.data.plan, parsed.data.months);
   await db.payment.create({
     data: { clientId: ctx.client.id, method: "CASH", plan: parsed.data.plan as Plan, months: parsed.data.months, amount },
+  });
+  await recordPaymentActivity(ctx.client.id, "cash-requested", {
+    amount,
+    plan: planNames[parsed.data.plan],
+    months: parsed.data.months,
+    method: "cash",
   });
   refresh();
   return { ok: true };

@@ -13,6 +13,7 @@ const items = [
   { href: "/dashboard/messages", label: "Messages" },
   { href: "/dashboard/subscribers", label: "Subscribers" },
   { href: "/dashboard/billing", label: "Plan & billing" },
+  { href: "/dashboard/account", label: "Account" },
 ];
 
 export function DashboardNav() {

@@ -184,23 +184,27 @@ enum Plan {
 /// A business using the website builder. Paid while paidUntil is today or later;
 /// otherwise in the free trial until trialEndsAt, then locked (site offline).
 model Client {
-  id             String    @id @default(cuid())
+  id              String           @id @default(cuid())
   /// Business name, as the admin knows it.
-  name           String
+  name            String
   /// Public address: appamora.com/s/<slug>.
-  slug           String    @unique
-  plan           Plan      @default(TRIAL)
-  trialEndsAt    DateTime
-  paidUntil      DateTime? @db.Date
+  slug            String           @unique
+  plan            Plan             @default(TRIAL)
+  trialEndsAt     DateTime
+  paidUntil       DateTime?        @db.Date
   /// For Custom clients: the services they bought, one per line.
-  customServices String[]  @default([])
+  customServices  String[]         @default([])
   /// Private notes for the admin.
-  notes          String    @default("")
-  users          User[]
-  site           Site?
-  payments       Payment[]
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  notes           String           @default("")
+  users           User[]
+  site            Site?
+  payments        Payment[]
+  activity        ClientActivity[]
+  /// When the admin and the client were last emailed about website changes (to group them).
+  adminEmailedAt  DateTime?
+  clientEmailedAt DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 }
 
 /// A client's website: the chosen template and the editable content (brand, colors, home page, contact details…).
@@ -289,4 +293,20 @@ model Payment {
   completedAt   DateTime?
 
   @@index([status, createdAt])
+}
+
+/// What happened on a client account: website edits, payments. Shown in the admin.
+model ClientActivity {
+  id        String   @id @default(cuid())
+  clientId  String
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  /// "design", "home", "pages", "details", "payment", "account"
+  area      String
+  summary   String
+  /// "client" or "admin" (an admin using View as client).
+  actor     String   @default("client")
+  createdAt DateTime @default(now())
+
+  @@index([clientId, createdAt])
+  @@index([createdAt])
 }

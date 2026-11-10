@@ -12,6 +12,9 @@
         "GOOGLE_*",
         "RECAPTCHA_SECRET_KEY",
         "PAYPAL_*",
+        "SMTP_*",
+        "EMAIL_FROM",
+        "ADMIN_NOTIFY_EMAIL",
         "NEXT_PUBLIC_*",
         "VERCEL_ENV",
         "VERCEL_PROJECT_PRODUCTION_URL"
